@@ -116,6 +116,7 @@ require 'cek.php';
                                         <th>Email</th>
                                         <th>Point award</th>
                                         <th>Keterangan</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -127,6 +128,7 @@ require 'cek.php';
                                         <th>Email</th>
                                         <th>Point award</th>
                                         <th>Keterangan</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -141,7 +143,7 @@ require 'cek.php';
                                         $email = $data['email'];
                                         $point_award = $data['point_award'];
                                         $keterangan = $data['keterangan'];
-                                        $id = $data['id_pelanggan'];
+                                        $id_pelanggan = $data['id_pelanggan'];
                                     ?>
 
                                         <tr>
@@ -152,7 +154,98 @@ require 'cek.php';
                                             <td><?= $email; ?></td>
                                             <td><?= $point_award; ?></td>
                                             <td><?= $keterangan; ?></td>
+                                            <td>
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit<?= $id_pelanggan; ?>">Edit</button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?= $id_pelanggan; ?>">Delete</button>
+                                            </td>
                                         </tr>
+
+                                        <!-- Edit Modal -->
+                                        <div class="modal fade" id="edit<?= $id_pelanggan; ?>">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Edit Data Pelanggan</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <form method="POST">
+                                                        <div class="modal-body">
+
+                                                            <label>Nama Pelanggan</label>
+                                                            <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
+
+                                                            <label>Alamat</label>
+                                                            <input type="text" name="alamat" value="<?= $alamat; ?>" class="form-control" required>
+
+                                                            <label>No telp</label>
+                                                            <input type="text" name="no_telp" value="<?= $no_telp; ?>" class="form-control" required>
+
+                                                            <label>Email</label>
+                                                            <input type="text" name="email" value="<?= $email; ?>" class="form-control" required>
+
+                                                            <label>Point Award</label>
+                                                            <input type="text" name="point_award" value="<?= $point_award; ?>" class="form-control" required>
+
+                                                            <label>Keterangan</label>
+                                                            <input type="text" name="keterangan" value="<?= $keterangan; ?>" class="form-control" required>
+
+                                                            <!-- Hidden id_pelanggan value -->
+                                                            <input type="hidden" name="id_pelanggan" value="<?= $id_pelanggan; ?>">
+                                                        </div>
+
+                                                        <!-- Modal footer -->
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-primary" name="editpelanggan">Submit</button>
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Delete Modal -->
+                                        <div class="modal fade" id="delete<?= $id_pelanggan; ?>">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Delete Data Pelanggan</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <form method="POST">
+                                                        <div class="modal-body">
+
+                                                            <label>Nama Pelanggan</label>
+                                                            <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" readonly>
+
+                                                            <label>No telp</label>
+                                                            <input type="text" name="no_telp" value="<?= $no_telp; ?>" class="form-control" readonly>
+
+                                                            <label>Email</label>
+                                                            <input type="text" name="email" value="<?= $email; ?>" class="form-control" readonly>
+
+                                                            <!-- Hidden id_pelanggan value -->
+                                                            <input type="hidden" name="id_pelanggan" value="<?= $id_pelanggan; ?>">
+                                                        </div>
+
+                                                        <!-- Modal footer -->
+                                                        <div class="modal-footer">
+                                                            <label>Yakin ingin menghapus?</label>
+                                                            <button type="submit" class="btn btn-primary" name="hapuspelanggan">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                     <?php }; ?>
 
                                 </tbody>

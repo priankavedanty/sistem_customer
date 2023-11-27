@@ -138,7 +138,7 @@ require 'cek.php';
                                     $sql = mysqli_query($conn, "SELECT * FROM tb_transaksi");
                                     while ($data = mysqli_fetch_array($sql)) {
                                         $tgl_transaksi = $data['tgl_transaksi'];
-                                        $nama = $data['nama'];
+                                        $nama = $data['nama_pelanggan'];
                                         $status_bayar = $data['status_bayar'];
                                         $batas_bayar = $data['batas_bayar'];
                                         $jumlah_transaksi = $data['jumlah_transaksi'];

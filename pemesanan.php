@@ -63,9 +63,9 @@ require 'cek.php';
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Pelanggan
                         </a>
-                        <a class="nav-link" href="pemesanan.php">
+                        <a class="nav-link" href="pesanan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Data Pemesanan
+                            Data pesanan
                         </a>
                         <a class="nav-link" href="desain.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -115,6 +115,7 @@ require 'cek.php';
                                         <th>Email</th>
                                         <th>Layanan</th>
                                         <th>Keterangan</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -125,6 +126,7 @@ require 'cek.php';
                                         <th>Email</th>
                                         <th>Layanan</th>
                                         <th>Keterangan</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -132,17 +134,109 @@ require 'cek.php';
                                     <?php
                                     $no = 1;
                                     $sql = $conn->query("SELECT * FROM tb_pemesanan order by id_pesanan asc");
-                                    while ($data = mysqli_fetch_array($sql)) :
+                                    while ($data = mysqli_fetch_array($sql)) {
+                                        $nama_pelanggan = $data['nama_pelanggan'];
+                                        $no_telp = $data['no_telp'];
+                                        $email = $data['email'];
+                                        $layanan = $data['layanan'];
+                                        $keterangan = $data['keterangan'];
+                                        $id_pesanan = $data['id_pesanan'];
                                     ?>
                                         <tr>
-                                            <td><?php echo $no++; ?></td>
-                                            <td><?php echo $data['nama']; ?></td>
-                                            <td><?php echo $data['no_telp']; ?></td>
-                                            <td><?php echo $data['email']; ?></td>
-                                            <td><?php echo $data['layanan']; ?></td>
-                                            <td><?php echo $data['keterangan']; ?></td>
+                                            <td><?= $no++; ?></td>
+                                            <td><?= $nama_pelanggan; ?></td>
+                                            <td><?= $no_telp; ?></td>
+                                            <td><?= $email; ?></td>
+                                            <td><?= $layanan; ?></td>
+                                            <td><?= $keterangan; ?></td>
+                                            <td>
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit<?= $id_pesanan; ?>">Edit</button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?= $id_pesanan; ?>">Delete</button>
+                                            </td>
                                         </tr>
-                                    <?php endwhile; // penutup perulangan while 
+
+                                        <!-- Edit Modal -->
+                                        <div class="modal fade" id="edit<?= $id_pesanan; ?>">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Edit Data Pesanan</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <form method="POST">
+                                                        <div class="modal-body">
+
+                                                            <label>Nama Pelanggan</label>
+                                                            <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
+
+                                                            <label>No telp</label>
+                                                            <input type="text" name="no_telp" value="<?= $no_telp; ?>" class="form-control" required>
+
+                                                            <label>Email</label>
+                                                            <input type="text" name="email" value="<?= $email; ?>" class="form-control" required>
+
+                                                            <label>Layanan</label>
+                                                            <input type="text" name="layanan" value="<?= $layanan; ?>" class="form-control" required>
+
+                                                            <label>Keterangan</label>
+                                                            <input type="text" name="keterangan" value="<?= $keterangan; ?>" class="form-control" required>
+
+                                                            <!-- Hidden id_pesanan value -->
+                                                            <input type="hidden" name="id_pesanan" value="<?= $id_pesanan; ?>">
+                                                        </div>
+
+                                                        <!-- Modal footer -->
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-primary" name="editpesanan">Submit</button>
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Delete Modal -->
+                                        <div class="modal fade" id="delete<?= $id_pesanan; ?>">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Delete Data Pesanan</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <form method="POST">
+                                                        <div class="modal-body">
+
+                                                            <label>Nama Pelanggan</label>
+                                                            <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" readonly>
+
+                                                            <label>No telp</label>
+                                                            <input type="text" name="no_telp" value="<?= $no_telp; ?>" class="form-control" readonly>
+
+                                                            <label>Email</label>
+                                                            <input type="text" name="email" value="<?= $email; ?>" class="form-control" readonly>
+
+                                                            <!-- Hidden id_pesanan value -->
+                                                            <input type="hidden" name="id_pesanan" value="<?= $id_pesanan; ?>">
+                                                        </div>
+
+                                                        <!-- Modal footer -->
+                                                        <div class="modal-footer">
+                                                            <label>Yakin ingin menghapus?</label>
+                                                            <button type="submit" class="btn btn-primary" name="hapuspesanan">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php }; // penutup perulangan while 
                                     ?>
 
                                 </tbody>

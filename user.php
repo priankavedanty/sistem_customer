@@ -129,12 +129,14 @@ require 'cek.php';
                                     <?php
                                     $no = 1;
                                     $sql = mysqli_query($conn, "SELECT * FROM tb_user");
+                                    
                                     while ($data = mysqli_fetch_array($sql)) {
                                         $nama_user = $data['nama_user'];
                                         $email = $data['email'];
                                         $jabatan = $data['jabatan'];
-                                        $id = $data['id_user'];
-                                    ?>
+                                        $id_user = $data['id_user'];
+
+                                        ?>
 
                                         <tr>
                                             <td><?= $no++; ?></td>
@@ -142,14 +144,13 @@ require 'cek.php';
                                             <td><?= $email; ?></td>
                                             <td><?= $jabatan; ?></td>
                                             <td>
-                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit">Edit</button>
-                                                <input type="hidden" name="iduserhapus" value="<?= $id_user; ?>">
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete">Delete</button>
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit<?= $id_user; ?>">Edit</button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?= $id_user; ?>">Delete</button>
                                             </td>
                                         </tr>
 
                                         <!-- Edit Modal -->
-                                        <div class="modal fade" id="edit">
+                                        <div class="modal fade" id="edit<?= $id_user; ?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
 
@@ -178,12 +179,52 @@ require 'cek.php';
                                                                                                 echo "selected";
                                                                                             } ?>>direktur</option>
                                                             </select>
+                                                            
+                                                            <!-- Hidden id_user value -->
+                                                            <input type="hidden" name="id_user" value="<?= $id_user; ?>">
                                                         </div>
 
                                                         <!-- Modal footer -->
                                                         <div class="modal-footer">
                                                             <button type="submit" class="btn btn-primary" name="edituser">Submit</button>
 
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Delete Modal -->
+                                        <div class="modal fade" id="delete<?= $id_user; ?>">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Delete Data User</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <form method="POST">
+                                                        <div class="modal-body">
+
+                                                            <label>Nama User</label>
+                                                            <input type="text" name="nama_user" value="<?= $nama_user; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off" readonly>
+
+                                                            <label>Jabatan</label>
+                                                            <select class="form-control" name="jabatan">
+                                                                <option value="<?= $jabatan; ?>"><?= $jabatan; ?></option>
+                                                            </select>
+                                                            
+                                                            <!-- Hidden id_user value -->
+                                                            <input type="hidden" name="id_user" value="<?= $id_user; ?>">
+                                                        </div>
+
+                                                        <!-- Modal footer -->
+                                                        <div class="modal-footer">
+                                                            <label>Yakin ingin menghapus?</label>
+                                                            <button type="submit" class="btn btn-primary" name="hapususer">Submit</button>
                                                         </div>
                                                     </form>
                                                 </div>
