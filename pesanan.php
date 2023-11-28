@@ -133,7 +133,7 @@ require 'cek.php';
 
                                     <?php
                                     $no = 1;
-                                    $sql = $conn->query("SELECT * FROM tb_pemesanan order by id_pesanan asc");
+                                    $sql = $conn->query("SELECT * FROM tb_pesanan order by id_pesanan asc");
                                     while ($data = mysqli_fetch_array($sql)) {
                                         $nama_pelanggan = $data['nama_pelanggan'];
                                         $no_telp = $data['no_telp'];

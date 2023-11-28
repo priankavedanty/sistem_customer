@@ -38,7 +38,7 @@ if (isset($_POST['login'])) {
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="bg-grey">
+<body class="bg-info">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>

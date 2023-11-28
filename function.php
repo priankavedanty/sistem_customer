@@ -138,55 +138,57 @@ if (isset($_POST['simpantransaksi'])) {
 
 //tambah data pesanan
 if (isset($_POST['simpanpesanan'])) {
+    $tanggal = $_POST['tanggal'];
     $nama_pelanggan = $_POST['nama_pelanggan'];
     $no_telp = $_POST['no_telp'];
     $email = $_POST['email'];
     $layanan = $_POST['layanan'];
     $keterangan = $_POST['keterangan'];
 
-    $simpanpesanan = mysqli_query($conn, "INSERT INTO tb_pemesanan(id_pesanan, nama_pelanggan, no_telp, email, layanan, keterangan)
-                VALUES ('$id_pesanan', '$nama_pelanggan', '$no_telp', '$email', '$layanan', '$keterangan')");
+    $simpanpesanan = mysqli_query($conn, "INSERT INTO tb_pesanan(id_pesanan, tanggal, nama_pelanggan, no_telp, email, layanan, keterangan)
+                VALUES ('$id_pesanan', '$tanggal', '$nama_pelanggan', '$no_telp', '$email', '$layanan', '$keterangan')");
 
     if ($simpanpesanan) {
-        header('location:pemesanan.php');
+        header('location:pesanan.php');
     } else {
         echo "Gagal simpan data pesanan";
-        header('location:pemesanan.php');
+        header('location:pesanan.php');
     }
 }
 
 //update data pesanan
 if (isset($_POST['editpesanan'])) {
     $id_pesanan = $_POST['id_pesanan'];
+    $tanggal = $_POST['tanggal'];
     $nama_pelanggan = $_POST['nama_pelanggan'];
     $no_telp = $_POST['no_telp'];
     $email = $_POST['email'];
     $layanan = $_POST['layanan'];
     $keterangan = $_POST['keterangan'];
 
-    $editpesanan = mysqli_query($conn, "UPDATE tb_pemesanan SET nama_pelanggan='$nama_pelanggan', no_telp='$no_telp', email='$email', layanan='$layanan', keterangan='$keterangan' WHERE id_pesanan='$id_pesanan'");
+    $editpesanan = mysqli_query($conn, "UPDATE tb_pesanan SET tanggal='$tanggal', nama_pelanggan='$nama_pelanggan', no_telp='$no_telp', email='$email', layanan='$layanan', keterangan='$keterangan' WHERE id_pesanan='$id_pesanan'");
     // print_r($editpesanan);
     // die;
 
     if ($editpesanan) {
-        header('location:pemesanan.php');
+        header('location:pesanan.php');
     } else {
         echo "Gagal update data pesanan";
-        header('location:pemesanan.php');
+        header('location:pesanan.php');
     }
 }
 
 //delete data pesanan
 if (isset($_POST['hapuspesanan'])) {
     $id_pesanan = $_POST['id_pesanan'];
-    $hapuspesanan = mysqli_query($conn, "DELETE FROM tb_pemesanan WHERE id_pesanan='$id_pesanan'");
+    $hapuspesanan = mysqli_query($conn, "DELETE FROM tb_pesanan WHERE id_pesanan='$id_pesanan'");
     // print_r($hapuspesanan);
     // die;
 
     if ($hapuspesanan) {
-        header('location:pemesanan.php');
+        header('location:pesanan.php');
     } else {
         echo "Gagal delete data pesanan";
-        header('location:pemesanan.php');
+        header('location:pesanan.php');
     }
 }
