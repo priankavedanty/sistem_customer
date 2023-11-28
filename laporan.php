@@ -20,7 +20,7 @@ require 'function.php';
 			Jl. Rajawali 14 Selemadeg Tabanan <br>
 			Telp. 0362819533</h3>
 		<hr>
-		<h3>LAPORAN PEMESANAN</h3>
+		<h3>LAPORAN PESANAN</h3>
 	</caption>
 	<thead>
 		<br>
@@ -38,7 +38,7 @@ require 'function.php';
 
 
 		$no = 1;
-		$sql = $conn->query("SELECT * FROM tb_pemesanan order by id_laporan asc ");
+		$sql = $conn->query("SELECT * FROM tb_pesanan order by id_laporan asc ");
 		while ($data = mysqli_fetch_array($sql))
 
 		?>

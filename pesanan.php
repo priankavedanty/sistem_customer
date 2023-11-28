@@ -133,12 +133,17 @@ require 'cek.php';
 
                                     <?php
                                     $no = 1;
-                                    $sql = $conn->query("SELECT * FROM tb_pemesanan order by id_pesanan asc");
+                                    $sql = $conn->query("SELECT * FROM tb_pesanan order by id_pesanan asc");
                                     while ($data = mysqli_fetch_array($sql)) {
                                         $nama_pelanggan = $data['nama_pelanggan'];
                                         $no_telp = $data['no_telp'];
                                         $email = $data['email'];
                                         $layanan = $data['layanan'];
+                                        $jenis_properti = $data['jenis_properti'];
+                                        $luas_bangunan = $data['luas_bangunan'];
+                                        $lokasi_proyek = $data['lokasi_proyek'];
+                                        $waktu_mulai_pengerjaan = $data['waktu_mulai_pengerjaan'];
+                                        $waktu_selesai_pengerjaan = $data['waktu_selesai_pengerjaan'];
                                         $keterangan = $data['keterangan'];
                                         $id_pesanan = $data['id_pesanan'];
                                     ?>
@@ -169,30 +174,80 @@ require 'cek.php';
                                                     <!-- Modal body -->
                                                     <form method="POST">
                                                         <div class="modal-body">
+                                                            <div class="row mb-3">
+                                                                <div class="col">
+                                                                    <label>Layanan</label> <br>
+                                                                    <!-- buat sebuah radio untuk edit dimana valuenya terisi dari database dan sisanya kosong -->
+                                                                    <label><input type="radio" name="layanan" value="bangun baru" <?php if ($layanan == "bangun baru") {
+                                                                                                                                        echo "checked";
+                                                                                                                                    } ?>> Bangun Baru </label> <br>
+                                                                    <label><input type="radio" name="layanan" value="renovasi" <?php if ($layanan == "renovasi") {
+                                                                                                                                    echo "checked";
+                                                                                                                                } ?>> Renovasi </label> <br>
+                                                                    <label><input type="radio" name="layanan" value="desain arsitek" <?php if ($layanan == "desain arsitek") {
+                                                                                                                                            echo "checked";
+                                                                                                                                        } ?>> Desain Arsitek </label> <br>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label>Jenis Properti</label> <br>
+                                                                    <label><input type="radio" name="jenis_properti" value="rumah baru" <?php if ($jenis_properti == "rumah baru") {
+                                                                                                                                            echo "checked";
+                                                                                                                                        } ?>> Rumah Baru </label> <br>
+                                                                    <label><input type="radio" name="jenis_properti" value="vila" <?php if ($jenis_properti == "vila") {
+                                                                                                                                        echo "checked";
+                                                                                                                                    } ?>> Vila </label> <br>
+                                                                    <label><input type="radio" name="jenis_properti" value="ruko" <?php if ($jenis_properti == "ruko") {
+                                                                                                                                        echo "checked";
+                                                                                                                                    } ?>> Ruko </label> <br>
+                                                                    <label><input type="radio" name="jenis_properti" value="bangunan" <?php if ($jenis_properti == "bangunan") {
+                                                                                                                                            echo "checked";
+                                                                                                                                        } ?>> Bangunan </label> <br>
+                                                                    <label><input type="radio" name="jenis_properti" value="perkantoran" <?php if ($jenis_properti == "perkantoran") {
+                                                                                                                                                echo "checked";
+                                                                                                                                            } ?>> Perkantoran </label> <br>
+                                                                    <label><input type="radio" name="jenis_properti" value="lainnya" <?php if ($jenis_properti == "lainnya") {
+                                                                                                                                            echo "checked";
+                                                                                                                                        } ?>> Lainnya </label> <br>
+                                                                </div>
 
-                                                            <label>Nama Pelanggan</label>
-                                                            <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
-                                                            <label>No telp</label>
-                                                            <input type="text" name="no_telp" value="<?= $no_telp; ?>" class="form-control" required>
 
-                                                            <label>Email</label>
-                                                            <input type="text" name="email" value="<?= $email; ?>" class="form-control" required>
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <label>Nama Pelanggan</label>
+                                                                        <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
-                                                            <label>Layanan</label>
-                                                            <input type="text" name="layanan" value="<?= $layanan; ?>" class="form-control" required>
+                                                                        <label>Email</label>
+                                                                        <input type="text" name="email" value="<?= $email; ?>" class="form-control" required>
 
-                                                            <label>Keterangan</label>
-                                                            <input type="text" name="keterangan" value="<?= $keterangan; ?>" class="form-control" required>
+                                                                        <label>Lokasi Proyek</label>
+                                                                        <input type="text" name="lokasi_proyek" value="<?= $lokasi_proyek; ?>" class="form-control" required>
 
-                                                            <!-- Hidden id_pesanan value -->
-                                                            <input type="hidden" name="id_pesanan" value="<?= $id_pesanan; ?>">
-                                                        </div>
+                                                                        <label>Keterangan</label>
+                                                                        <input type="text" name="keterangan" value="<?= $keterangan; ?>" class="form-control" required>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <label>No telp</label>
+                                                                        <input type="text" name="no_telp" value="<?= $no_telp; ?>" class="form-control" required>
 
-                                                        <!-- Modal footer -->
-                                                        <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-primary" name="editpesanan">Submit</button>
+                                                                        <label>Luas Bangunan</label>
+                                                                        <input type="text" name="luas_bangunan" value="<?= $luas_bangunan; ?>" class="form-control" required>
 
+                                                                        <label>Waktu Mulai Pengerjaan</label>
+                                                                        <input type="date" name="waktu_mulai_pengerjaan" value="<?= $waktu_mulai_pengerjaan; ?>" class="form-control" required>
+
+                                                                        <label>Waktu Selesai Pengerjaan</label>
+                                                                        <input type="date" name="waktu_selesai_pengerjaan" value="<?= $waktu_selesai_pengerjaan; ?>" class="form-control" required>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Hidden id pesanan -->
+                                                                <input type="hidden" name="id_pesanan" value="<?= $id_pesanan; ?>">
+                                                                <!-- Modal footer -->
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-primary" name="editpesanan">Submit</button>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -236,6 +291,7 @@ require 'cek.php';
                                                 </div>
                                             </div>
                                         </div>
+
                                     <?php }; // penutup perulangan while 
                                     ?>
 
@@ -268,6 +324,7 @@ require 'cek.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
+
 <!-- The Modal -->
 <div class="modal fade" id="myModal">
     <div class="modal-dialog">
@@ -282,27 +339,57 @@ require 'cek.php';
             <!-- Modal body -->
             <form method="POST">
                 <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Layanan</label> <br>
+                            <label><input type="radio" name="layanan" value="bangun baru"> Bangun Baru </label> <br>
+                            <label><input type="radio" name="layanan" value="renovasi"> Renovasi </label> <br>
+                            <label><input type="radio" name="layanan" value="desain arsitek"> Desain Arsitek </label> <br>
+                        </div>
 
-                    <label>Nama Pelanggan</label>
-                    <input type="text" name="nama_pelanggan" placeholder="Masukkan nama pelanggan" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
+                        <div class="col">
+                            <label>Jenis Properti</label> <br>
+                            <label><input type="radio" name="jenis_properti" value="rumah baru"> Rumah Baru </label> <br>
+                            <label><input type="radio" name="jenis_properti" value="vila"> Vila </label> <br>
+                            <label><input type="radio" name="jenis_properti" value="ruko"> Ruko </label> <br>
+                            <label><input type="radio" name="jenis_properti" value="bangunan"> Bangunan </label> <br>
+                            <label><input type="radio" name="jenis_properti" value="perkantoran"> Perkantoran </label> <br>
+                            <label><input type="radio" name="jenis_properti" value="lainnya"> Lainnya </label> <br>
+                        </div>
+                    </div>
 
-                    <label>No telp</label>
-                    <input type="text" name="no_telp" placeholder="Masukkan no telp" class="form-control" required>
 
-                    <label>Email</label>
-                    <input type="text" name="email" placeholder="Masukkan email" class="form-control" required>
+                    <div class="row">
+                        <div class="col">
+                            <label>Nama Pelanggan</label>
+                            <input type="text" name="nama_pelanggan" placeholder="Masukkan nama pelanggan" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
-                    <label>Layanan</label>
-                    <input type="text" name="layanan" placeholder="Masukkan layanan" class="form-control" required>
+                            <label>Email</label>
+                            <input type="text" name="email" placeholder="Masukkan email" class="form-control" required>
 
-                    <label>Keterangan</label>
-                    <input type="text" name="keterangan" placeholder="Masukkan keterangan" class="form-control" required>
+                            <label>Lokasi Proyek</label>
+                            <input type="text" name="lokasi_proyek" placeholder="Masukkan lokasi proyek" class="form-control" required>
+                        </div>
 
+                        <div class="col">
+                            <label>No telp</label>
+                            <input type="text" name="no_telp" placeholder="Masukkan no telp" class="form-control" required>
+
+                            <label>Luas Bangunan</label>
+                            <input type="text" name="luas_bangunan" placeholder="Masukkan luas bangunan" class="form-control" required>
+
+                            <label>Waktu Mulai Pengerjaan</label>
+                            <input type="date" name="waktu_mulai_pengerjaan" placeholder="Masukkan waktu mulai pengerjaan" class="form-control" required>
+
+                            <label>Waktu Selesai Pengerjaan</label>
+                            <input type="date" name="waktu_selesai_pengerjaan" placeholder="Masukkan waktu selesai pengerjaan" class="form-control" required>
+                        </div>
+                    </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" name="simpanpesanan">Submit</button>
-
                     </div>
+                </div>
             </form>
         </div>
     </div>
