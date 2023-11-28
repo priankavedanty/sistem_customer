@@ -138,6 +138,7 @@ if (isset($_POST['simpantransaksi'])) {
 
 //tambah data pesanan
 if (isset($_POST['simpanpesanan'])) {
+    $tanggal = $_POST['tanggal'];
     $nama_pelanggan = $_POST['nama_pelanggan'];
     $no_telp = $_POST['no_telp'];
     $email = $_POST['email'];
@@ -167,6 +168,7 @@ if (isset($_POST['simpanpesanan'])) {
 //update data pesanan
 if (isset($_POST['editpesanan'])) {
     $id_pesanan = $_POST['id_pesanan'];
+    $tanggal = $_POST['tanggal'];
     $nama_pelanggan = $_POST['nama_pelanggan'];
     $no_telp = $_POST['no_telp'];
     $email = $_POST['email'];
