@@ -63,9 +63,9 @@ require 'cek.php';
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Pelanggan
                         </a>
-                        <a class="nav-link" href="pesanan.php">
+                        <a class="nav-link" href="pemesanan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Data pesanan
+                            Data Pemesanan
                         </a>
                         <a class="nav-link" href="desain.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -169,25 +169,46 @@ require 'cek.php';
                                                     <!-- Modal body -->
                                                     <form method="POST">
                                                         <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <label>Nama Pelanggan</label>
+                                                                    <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
-                                                            <label>Nama Pelanggan</label>
-                                                            <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
+                                                                    <label>No telp</label>
+                                                                    <input type="text" name="no_telp" value="<?= $no_telp; ?>" class="form-control" required>
 
-                                                            <label>No telp</label>
-                                                            <input type="text" name="no_telp" value="<?= $no_telp; ?>" class="form-control" required>
+                                                                    <label>Email</label>
+                                                                    <input type="text" name="email" value="<?= $email; ?>" class="form-control" required>
 
-                                                            <label>Email</label>
-                                                            <input type="text" name="email" value="<?= $email; ?>" class="form-control" required>
+                                                                    <label>Layanan</label>
+                                                                    <input type="text" name="layanan" value="<?= $layanan; ?>" class="form-control" required>
 
-                                                            <label>Layanan</label>
-                                                            <input type="text" name="layanan" value="<?= $layanan; ?>" class="form-control" required>
+                                                                    <label>Keterangan</label>
+                                                                    <input type="text" name="keterangan" value="<?= $keterangan; ?>" class="form-control" required>
+                                                                </div>
+                                                            </div>
 
-                                                            <label>Keterangan</label>
-                                                            <input type="text" name="keterangan" value="<?= $keterangan; ?>" class="form-control" required>
+                                                            <div class="col">
 
-                                                            <!-- Hidden id_pesanan value -->
-                                                            <input type="hidden" name="id_pesanan" value="<?= $id_pesanan; ?>">
+                                                                <label>Nama Pelanggan</label>
+                                                                <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
+
+                                                                <label>No telp</label>
+                                                                <input type="text" name="no_telp" value="<?= $no_telp; ?>" class="form-control" required>
+
+                                                                <label>Email</label>
+                                                                <input type="text" name="email" value="<?= $email; ?>" class="form-control" required>
+
+                                                                <label>Layanan</label>
+                                                                <input type="text" name="layanan" value="<?= $layanan; ?>" class="form-control" required>
+
+                                                                <label>Keterangan</label>
+                                                                <input type="text" name="keterangan" value="<?= $keterangan; ?>" class="form-control" required>
+                                                            </div>
                                                         </div>
+
+                                                        <!-- Hidden id_pesanan value -->
+                                                        <input type="hidden" name="id_pesanan" value="<?= $id_pesanan; ?>">
 
                                                         <!-- Modal footer -->
                                                         <div class="modal-footer">
@@ -283,27 +304,55 @@ require 'cek.php';
             <!-- Modal body -->
             <form method="POST">
                 <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Layanan</label> <br>
+                            <label><input type="radio" name="jenis_properti" value="bangun_baru"> Bangun Baru </label> <br>
+                            <label><input type="radio" name="jenis_properti" value="renovasi"> Renovasi </label> <br>
+                            <label><input type="radio" name="jenis_properti" value="desain_arsitek"> Desain Arsitek </label> <br>
+                        </div>
 
-                    <label>Nama Pelanggan</label>
-                    <input type="text" name="nama_pelanggan" placeholder="Masukkan nama pelanggan" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
+                        <div class="col">
+                            <label>Jenis Properti</label> <br>
+                            <label><input type="radio" name="jenis_properti" value="rumah_baru"> Rumah Baru </label> <br>
+                            <label><input type="radio" name="jenis_properti" value="vila"> Vila </label> <br>
+                            <label><input type="radio" name="jenis_properti" value="ruko"> Ruko </label> <br>
+                            <label><input type="radio" name="jenis_properti" value="bangunan"> Bangunan </label> <br>
+                            <label><input type="radio" name="jenis_properti" value="perkantoran"> Perkantoran </label> <br>
+                            <label><input type="radio" name="jenis_properti" value="lainnya"> Lainnya </label> <br>
+                        </div>
+                    </div>
 
-                    <label>No telp</label>
-                    <input type="text" name="no_telp" placeholder="Masukkan no telp" class="form-control" required>
 
-                    <label>Email</label>
-                    <input type="text" name="email" placeholder="Masukkan email" class="form-control" required>
+                    <div class="row">
+                        <div class="col">
+                            <label>Nama Pelanggan</label>
+                            <input type="text" name="nama_pelanggan" placeholder="Masukkan nama pelanggan" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
-                    <label>Layanan</label>
-                    <input type="text" name="layanan" placeholder="Masukkan layanan" class="form-control" required>
+                            <label>Email</label>
+                            <input type="text" name="email" placeholder="Masukkan email" class="form-control" required>
 
-                    <label>Keterangan</label>
-                    <input type="text" name="keterangan" placeholder="Masukkan keterangan" class="form-control" required>
+                            <label>Lokasi Proyek</label>
+                            <input type="text" name="lokasi_proyek" placeholder="Masukkan lokasi proyek" class="form-control" required>
+                        </div>
 
+                        <div class="col">
+                            <label>No telp</label>
+                            <input type="text" name="no_telp" placeholder="Masukkan no telp" class="form-control" required>
+
+                            <label>Luas Bangunan</label>
+                            <input type="text" name="luas_bangunan" placeholder="Masukkan luas bangunan" class="form-control" required>
+
+                            <label>Waktu Pengerjaan</label>
+                            <input type="text" name="waktu_pengerjaan" placeholder="Masukkan waktu pengerjaan" class="form-control" required>
+                        </div>
+                    </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" name="simpanpesanan">Submit</button>
-
                     </div>
+                </div>
+
             </form>
         </div>
     </div>
