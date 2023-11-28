@@ -129,14 +129,14 @@ require 'cek.php';
                                     <?php
                                     $no = 1;
                                     $sql = mysqli_query($conn, "SELECT * FROM tb_user");
-                                    
+
                                     while ($data = mysqli_fetch_array($sql)) {
                                         $nama_user = $data['nama_user'];
                                         $email = $data['email'];
                                         $jabatan = $data['jabatan'];
                                         $id_user = $data['id_user'];
 
-                                        ?>
+                                    ?>
 
                                         <tr>
                                             <td><?= $no++; ?></td>
@@ -179,7 +179,7 @@ require 'cek.php';
                                                                                                 echo "selected";
                                                                                             } ?>>direktur</option>
                                                             </select>
-                                                            
+
                                                             <!-- Hidden id_user value -->
                                                             <input type="hidden" name="id_user" value="<?= $id_user; ?>">
                                                         </div>
@@ -216,7 +216,7 @@ require 'cek.php';
                                                             <select class="form-control" name="jabatan">
                                                                 <option value="<?= $jabatan; ?>"><?= $jabatan; ?></option>
                                                             </select>
-                                                            
+
                                                             <!-- Hidden id_user value -->
                                                             <input type="hidden" name="id_user" value="<?= $id_user; ?>">
                                                         </div>

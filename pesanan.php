@@ -65,7 +65,7 @@ require 'cek.php';
                         </a>
                         <a class="nav-link" href="pesanan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Data pesanan
+                            Data Pesanan
                         </a>
                         <a class="nav-link" href="desain.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>

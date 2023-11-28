@@ -53,7 +53,7 @@ if (isset($_POST['hapususer'])) {
     if ($hapususer) {
         header('location:user.php');
     } else {
-        echo "Gagal update data user";
+        echo "Gagal delete data user";
         header('location:user.php');
     }
 }
@@ -110,7 +110,7 @@ if (isset($_POST['hapuspelanggan'])) {
     if ($hapuspelanggan) {
         header('location:pelanggan.php');
     } else {
-        echo "Gagal update data pelanggan";
+        echo "Gagal delete data pelanggan";
         header('location:pelanggan.php');
     }
 }
@@ -186,8 +186,7 @@ if (isset($_POST['hapuspesanan'])) {
     if ($hapuspesanan) {
         header('location:pemesanan.php');
     } else {
-        echo "Gagal update data pesanan";
+        echo "Gagal delete data pesanan";
         header('location:pemesanan.php');
     }
 }
-
