@@ -46,7 +46,7 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
         </ul>
     </nav>
     <div id="layoutSidenav">
-                <div id="layoutSidenav_nav">
+        <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
@@ -104,7 +104,7 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h2 class="mt-4">Data Pelanggan</h2>
+                    <h2 class="mt-4">Data Inventory</h2>
                     <!-- Button to Open the Modal -->
 
                     <div class="card mb-4">
@@ -119,22 +119,24 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Nama pelanggan</th>
-                                        <th>Alamat</th>
-                                        <th>No telp</th>
-                                        <th>Email</th>
-                                        <th>Keterangan</th>
+                                        <th>Jenis bahan</th>
+                                        <th>Satuan</th>
+                                        <th>Harga</th>
+                                        <th>Terpakai</th>
+                                        <th>Jumlah stok</th>
+                                        <th>Penggunaan stok</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Nama pelanggan</th>
-                                        <th>Alamat</th>
-                                        <th>No telp</th>
-                                        <th>Email</th>
-                                        <th>Keterangan</th>
+                                        <th>Jenis bahan</th>
+                                        <th>Satuan</th>
+                                        <th>Harga</th>
+                                        <th>Terpakai</th>
+                                        <th>Jumlah stok</th>
+                                        <th>Penggunaan stok</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -142,37 +144,39 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
 
                                     <?php
                                     $no = 1;
-                                    $sql = mysqli_query($conn, "SELECT * FROM tb_pelanggan");
+                                    $sql = mysqli_query($conn, "SELECT * FROM tb_inventory");
                                     while ($data = mysqli_fetch_array($sql)) {
-                                        $nama_pelanggan = $data['nama_pelanggan'];
-                                        $alamat = $data['alamat'];
-                                        $no_telp = $data['no_telp'];
-                                        $email = $data['email'];
-                                        $keterangan = $data['keterangan'];
-                                        $id_pelanggan = $data['id_pelanggan'];
+                                        $jenis_bahan = $data['jenis_bahan'];
+                                        $satuan = $data['satuan'];
+                                        $harga = $data['harga'];
+                                        $terpakai = $data['terpakai'];
+                                        $jumlah_stok = $data['jumlah_stok'];
+                                        $penggunaan = $data['penggunaan'];
+                                        $id_inventory = $data['id_inventory'];
                                     ?>
 
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><?= $nama_pelanggan; ?></td>
-                                            <td><?= $alamat; ?></td>
-                                            <td><?= $no_telp; ?></td>
-                                            <td><?= $email; ?></td>
-                                            <td><?= $keterangan; ?></td>
+                                            <td><?= $jenis_bahan; ?></td>
+                                            <td><?= $satuan; ?></td>
+                                            <td><?= $harga; ?></td>
+                                            <td><?= $terpakai; ?></td>
+                                            <td><?= $jumlah_stok; ?></td>
+                                            <td><?= $penggunaan; ?></td>
                                             <td>
-                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit<?= $id_pelanggan; ?>">Edit</button>
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?= $id_pelanggan; ?>">Delete</button>
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit<?= $id_inventory; ?>">Edit</button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?= $id_inventory; ?>">Delete</button>
                                             </td>
                                         </tr>
 
                                         <!-- Edit Modal -->
-                                        <div class="modal fade" id="edit<?= $id_pelanggan; ?>">
+                                        <div class="modal fade" id="edit<?= $id_inventory; ?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
 
                                                     <!-- Modal Header -->
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Edit Data Pelanggan</h4>
+                                                        <h4 class="modal-title">Edit Data Inventory</h4>
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                     </div>
 
@@ -180,28 +184,31 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                                                     <form method="POST">
                                                         <div class="modal-body">
 
-                                                            <label>Nama Pelanggan</label>
-                                                            <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
+                                                            <label>Jenis bahan</label>
+                                                            <input type="text" name="jenis_bahan" value="<?= $jenis_bahan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
-                                                            <label>Alamat</label>
-                                                            <input type="text" name="alamat" value="<?= $alamat; ?>" class="form-control" required>
+                                                            <label>Satuan</label>
+                                                            <input type="text" name="satuan" value="<?= $satuan; ?>" class="form-control" required>
 
-                                                            <label>No telp</label>
-                                                            <input type="text" name="no_telp" value="<?= $no_telp; ?>" class="form-control" required>
+                                                            <label>Harga</label>
+                                                            <input type="text" name="harga" value="<?= $harga; ?>" class="form-control" required>
 
-                                                            <label>Email</label>
-                                                            <input type="text" name="email" value="<?= $email; ?>" class="form-control" required>
+                                                            <label>Terpakai</label>
+                                                            <input type="text" name="terpakai" value="<?= $terpakai; ?>" class="form-control" required>
 
-                                                            <label>Keterangan</label>
-                                                            <input type="text" name="keterangan" value="<?= $keterangan; ?>" class="form-control" required>
+                                                            <label>Jumlah stok</label>
+                                                            <input type="number" name="jumlah_stok" value="<?= $jumlah_stok; ?>" class="form-control" required>
+
+                                                            <label>Penggunaan</label>
+                                                            <input type="text" name="penggunaan" value="<?= $penggunaan; ?>" class="form-control" required>
 
                                                             <!-- Hidden id_pelanggan value -->
-                                                            <input type="hidden" name="id_pelanggan" value="<?= $id_pelanggan; ?>">
+                                                            <input type="hidden" name="id_inventory" value="<?= $id_inventory; ?>">
                                                         </div>
 
                                                         <!-- Modal footer -->
                                                         <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-primary" name="editpelanggan">Submit</button>
+                                                            <button type="submit" class="btn btn-primary" name="editinventory">Submit</button>
 
                                                         </div>
                                                     </form>
@@ -210,13 +217,13 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                                         </div>
 
                                         <!-- Delete Modal -->
-                                        <div class="modal fade" id="delete<?= $id_pelanggan; ?>">
+                                        <div class="modal fade" id="delete<?= $id_inventory; ?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
 
                                                     <!-- Modal Header -->
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Delete Data Pelanggan</h4>
+                                                        <h4 class="modal-title">Delete Data Inventory</h4>
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                     </div>
 
@@ -224,23 +231,32 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                                                     <form method="POST">
                                                         <div class="modal-body">
 
-                                                            <label>Nama Pelanggan</label>
-                                                            <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" readonly>
+                                                            <label>Jenis bahan</label>
+                                                            <input type="text" name="jenis_bahan" value="<?= $jenis_bahan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
-                                                            <label>No telp</label>
-                                                            <input type="text" name="no_telp" value="<?= $no_telp; ?>" class="form-control" readonly>
+                                                            <label>Satuan</label>
+                                                            <input type="text" name="satuan" value="<?= $satuan; ?>" class="form-control" required>
 
-                                                            <label>Email</label>
-                                                            <input type="text" name="email" value="<?= $email; ?>" class="form-control" readonly>
+                                                            <label>Harga</label>
+                                                            <input type="text" name="harga" value="<?= $harga; ?>" class="form-control" required>
+
+                                                            <label>Terpakai</label>
+                                                            <input type="text" name="terpakai" value="<?= $terpakai; ?>" class="form-control" required>
+
+                                                            <label>Jumlah stok</label>
+                                                            <input type="number" name="jumlah_stok" value="<?= $jumlah_stok; ?>" class="form-control" required>
+
+                                                            <label>Penggunaan</label>
+                                                            <input type="text" name="penggunaan" value="<?= $penggunaan; ?>" class="form-control" required>
 
                                                             <!-- Hidden id_pelanggan value -->
-                                                            <input type="hidden" name="id_pelanggan" value="<?= $id_pelanggan; ?>">
+                                                            <input type="hidden" name="id_inventory" value="<?= $id_inventory; ?>">
                                                         </div>
 
                                                         <!-- Modal footer -->
                                                         <div class="modal-footer">
                                                             <label>Yakin ingin menghapus?</label>
-                                                            <button type="submit" class="btn btn-primary" name="hapuspelanggan">Submit</button>
+                                                            <button type="submit" class="btn btn-primary" name="hapusinventory">Submit</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -287,7 +303,7 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Tambah Data Pelanggan</h4>
+                <h4 class="modal-title">Tambah Data Inventory</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -295,24 +311,27 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
             <form method="POST">
                 <div class="modal-body">
 
-                    <label>Nama Pelanggan</label>
-                    <input type="text" name="nama_pelanggan" placeholder="Masukkan nama pelanggan" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
+                    <label>Jenis bahan</label>
+                    <input type="text" name="jenis_bahan" placeholder="Masukkan jenis bahan" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
-                    <label>Alamat</label>
-                    <input type="text" name="alamat" placeholder="Masukkan alamat" class="form-control" required>
+                    <label>Satuan</label>
+                    <input type="text" name="satuan" placeholder="Masukkan satuan" class="form-control" required>
 
-                    <label>No telp</label>
-                    <input type="text" name="no_telp" placeholder="Masukkan no telp" class="form-control" required>
+                    <label>Harga</label>
+                    <input type="number" name="harga" placeholder="Masukkan harga" class="form-control" required>
 
-                    <label>Email</label>
-                    <input type="text" name="email" placeholder="Masukkan email" class="form-control" required>
+                    <label>Terpakai</label>
+                    <input type="text" name="terpakai" placeholder="Masukkan jumlah terpakai" class="form-control" required>
 
-                    <label>Keterangan</label>
-                    <input type="text" name="keterangan" placeholder="Masukkan keterangan" class="form-control" required>
+                    <label>Jumlah stok</label>
+                    <input type="number" name="jumlah_stok" placeholder="Masukkan jumlah stok" class="form-control" required>
+
+                    <label>Penggunaan</label>
+                    <input type="text" name="penggunaan" placeholder="Masukkan penggunaan stok" class="form-control" required>
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" name="simpanpelanggan">Submit</button>
+                        <button type="submit" class="btn btn-primary" name="simpaninventory">Submit</button>
 
                     </div>
             </form>

@@ -3,6 +3,8 @@
 require 'function.php';
 require 'cek.php';
 
+if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_SESSION['pelanggan']) {  
+
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +16,7 @@ require 'cek.php';
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Sistem E-CRM</title>
+    <title>Sistem Informasi Manajemen</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -44,7 +46,7 @@ require 'cek.php';
         </ul>
     </nav>
     <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
+                <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
@@ -53,7 +55,7 @@ require 'cek.php';
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-
+                        <?php if (@$_SESSION['admin']) { ?>
                         <div class="sb-sidenav-menu-heading">Menu</div>
                         <a class="nav-link" href="user.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -63,31 +65,38 @@ require 'cek.php';
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Pelanggan
                         </a>
+                        <a class="nav-link" href="mandor.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Data Mandor
+                        </a>
+                    <?php } if (@$_SESSION['admin']) { ?>
+                        <a class="nav-link" href="inventory.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Data Inventory
+                        </a>
                         <a class="nav-link" href="pesanan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Pesanan
-                        </a>
-                        <a class="nav-link" href="desain.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Data Desain Proyek
-                        </a>
-                        <a class="nav-link" href="review.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Data Review Pelayanan
                         </a>
                         <a class="nav-link" href="transaksi.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Transaksi
                         </a>
+                    <?php } if (@$_SESSION['mandor']) { ?>
+                        <a class="nav-link" href="proyek.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Data Proyek
+                        </a>
+                    <?php } if (@$_SESSION['mandor'] || @$_SESSION['direktur']) { ?> 
                         <a class="nav-link" href="laporan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Laporan
                         </a>
-
+                        <?php } ?>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Admin
+                        <div class="small">Logged in as: <br>
+                        Admin </div>
                     </div>
             </nav>
         </div>
@@ -110,22 +119,26 @@ require 'cek.php';
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Nama pelanggan</th>
+                                        <th>Tanggal</th>
+                                        <th>Pelanggan</th>
                                         <th>No telp</th>
-                                        <th>Email</th>
+                                        <th>Lokasi</th>
+                                        <th>Luas bangunan</th>
                                         <th>Layanan</th>
-                                        <th>Keterangan</th>
+                                        <th>Jenis Properti</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Nama pelanggan</th>
+                                        <th>Tanggal</th>
+                                        <th>Pelanggan</th>
                                         <th>No telp</th>
-                                        <th>Email</th>
+                                        <th>Lokasi</th>
+                                        <th>Luas bangunan</th>
                                         <th>Layanan</th>
-                                        <th>Keterangan</th>
+                                        <th>Jenis Properti</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -135,25 +148,24 @@ require 'cek.php';
                                     $no = 1;
                                     $sql = $conn->query("SELECT * FROM tb_pesanan order by id_pesanan asc");
                                     while ($data = mysqli_fetch_array($sql)) {
+                                        $tanggal = $data['tanggal'];
                                         $nama_pelanggan = $data['nama_pelanggan'];
                                         $no_telp = $data['no_telp'];
-                                        $email = $data['email'];
+                                        $lokasi = $data['lokasi'];
+                                        $luas_bangunan = $data['luas_bangunan'];
                                         $layanan = $data['layanan'];
                                         $jenis_properti = $data['jenis_properti'];
-                                        $luas_bangunan = $data['luas_bangunan'];
-                                        $lokasi_proyek = $data['lokasi_proyek'];
-                                        $waktu_mulai_pengerjaan = $data['waktu_mulai_pengerjaan'];
-                                        $waktu_selesai_pengerjaan = $data['waktu_selesai_pengerjaan'];
-                                        $keterangan = $data['keterangan'];
                                         $id_pesanan = $data['id_pesanan'];
                                     ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
+                                            <td><?= $tanggal; ?></td>
                                             <td><?= $nama_pelanggan; ?></td>
                                             <td><?= $no_telp; ?></td>
-                                            <td><?= $email; ?></td>
+                                            <td><?= $lokasi; ?></td>
+                                            <td><?= $luas_bangunan; ?></td>
                                             <td><?= $layanan; ?></td>
-                                            <td><?= $keterangan; ?></td>
+                                            <td><?= $jenis_properti; ?></td>
                                             <td>
                                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit<?= $id_pesanan; ?>">Edit</button>
                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?= $id_pesanan; ?>">Delete</button>
@@ -214,17 +226,15 @@ require 'cek.php';
 
                                                                 <div class="row">
                                                                     <div class="col">
+                                                                        <label>Tanggal</label>
+                                                                        <input type="date" name="tanggal" value="<?= $tanggal; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
+
                                                                         <label>Nama Pelanggan</label>
                                                                         <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
-                                                                        <label>Email</label>
-                                                                        <input type="text" name="email" value="<?= $email; ?>" class="form-control" required>
-
                                                                         <label>Lokasi Proyek</label>
-                                                                        <input type="text" name="lokasi_proyek" value="<?= $lokasi_proyek; ?>" class="form-control" required>
+                                                                        <input type="text" name="lokasi" value="<?= $lokasi; ?>" class="form-control" required>
 
-                                                                        <label>Keterangan</label>
-                                                                        <input type="text" name="keterangan" value="<?= $keterangan; ?>" class="form-control" required>
                                                                     </div>
                                                                     <div class="col">
                                                                         <label>No telp</label>
@@ -233,11 +243,6 @@ require 'cek.php';
                                                                         <label>Luas Bangunan</label>
                                                                         <input type="text" name="luas_bangunan" value="<?= $luas_bangunan; ?>" class="form-control" required>
 
-                                                                        <label>Waktu Mulai Pengerjaan</label>
-                                                                        <input type="date" name="waktu_mulai_pengerjaan" value="<?= $waktu_mulai_pengerjaan; ?>" class="form-control" required>
-
-                                                                        <label>Waktu Selesai Pengerjaan</label>
-                                                                        <input type="date" name="waktu_selesai_pengerjaan" value="<?= $waktu_selesai_pengerjaan; ?>" class="form-control" required>
                                                                     </div>
                                                                 </div>
 
@@ -268,6 +273,8 @@ require 'cek.php';
                                                     <!-- Modal body -->
                                                     <form method="POST">
                                                         <div class="modal-body">
+                                                            <label>Tanggal</label>
+                                                            <input type="date" name="tanggal" value="<?= $tanggal; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
                                                             <label>Nama Pelanggan</label>
                                                             <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" readonly>
@@ -314,8 +321,8 @@ require 'cek.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="assets/demo/chart-newarea-demo.js"></script>
+    <script src="assets/demo/chart-newbar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -361,11 +368,11 @@ require 'cek.php';
 
                     <div class="row">
                         <div class="col">
+                            <label>Tanggal</label>
+                            <input type="date" name="tanggal" placeholder="Masukkan tanggal" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
+
                             <label>Nama Pelanggan</label>
                             <input type="text" name="nama_pelanggan" placeholder="Masukkan nama pelanggan" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
-
-                            <label>Email</label>
-                            <input type="text" name="email" placeholder="Masukkan email" class="form-control" required>
 
                             <label>Lokasi Proyek</label>
                             <input type="text" name="lokasi_proyek" placeholder="Masukkan lokasi proyek" class="form-control" required>
@@ -378,21 +385,19 @@ require 'cek.php';
                             <label>Luas Bangunan</label>
                             <input type="text" name="luas_bangunan" placeholder="Masukkan luas bangunan" class="form-control" required>
 
-                            <label>Waktu Mulai Pengerjaan</label>
-                            <input type="date" name="waktu_mulai_pengerjaan" placeholder="Masukkan waktu mulai pengerjaan" class="form-control" required>
-
-                            <label>Waktu Selesai Pengerjaan</label>
-                            <input type="date" name="waktu_selesai_pengerjaan" placeholder="Masukkan waktu selesai pengerjaan" class="form-control" required>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" name="simpanpesanan">Submit</button>
                         </div>
                     </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" name="simpanpesanan">Submit</button>
-                    </div>
-                </div>
             </form>
         </div>
     </div>
 </div>
 
 </html>
+
+<?php
+}
+?>

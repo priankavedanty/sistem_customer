@@ -5,22 +5,37 @@ require 'function.php';
 //cek login, terdaftar atau tidak
 
 if (isset($_POST['login'])) {
-    $email = $_POST['email'];
+    $nama_user = $_POST['nama_user'];
     $password = $_POST['password'];
 
     //cocokkan dengan database
-    $cekdatabase = mysqli_query($conn, "SELECT * FROM tb_user WHERE email='$email' and password='$password' ");
+    $cekdatabase = mysqli_query($conn, "SELECT * FROM tb_user WHERE nama_user='$nama_user' and password='$password' ");
 
     //hitung jumlah data
-    $hitung = mysqli_num_rows($cekdatabase);
 
-    if ($hitung > 0) {
-        $_SESSION['log'] = 'True';
-        header('location:index.php');
-    } else {
-        header('location:login.php');
-    }
+    $hitung = $cekdatabase->num_rows;
+    $data = mysqli_fetch_assoc($cekdatabase);
+    header("location:index.php");
+
+    // if ($hitung > 0) {
+    //     if ($data['jabatan'] == "admin") {
+    //         $_SESSION['admin'] = $data['id_user'];
+    //          header("location:index.php");
+    //     } elseif ($data['jabatan'] == "direktur") {
+    //         $_SESSION['direktur'] = $data['id_user'];
+    //         header("location:index.php");
+    //     } elseif ($data['jabatan'] == "mandor") {
+    //         $_SESSION['mandor'] = $data['id_user'];
+    //         header("location:index.php");
+    //     } elseif ($data['jabatan'] == "pelanggan") {
+    //         $_SESSION['pelanggan'] = $data['id_user'];
+    //         header('location:index.php');
+    //     }
+    // } else {
+    //     header('location:login.php');
+    // }
 }
+
 
 ?>
 
@@ -38,13 +53,13 @@ if (isset($_POST['login'])) {
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="bg-info">
+<body class style="background-color: #87CEEB;">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-lg-6">
+                        <div class="col-lg-8">
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
                                 <div class="card-header">
                                     <h3 class="text-center font-weight-light my-4">Silahkan Login</h3>
@@ -52,16 +67,24 @@ if (isset($_POST['login'])) {
                                 <div class="card-body">
                                     <form method="post">
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" name="email" id="inputEmail" type="email" placeholder="Email" />
-                                            <label for="inputEmail">Enter Email address</label>
+                                            <input class="form-control" name="nama_user" id="inputNamaUser" type="nama_user" placeholder="Username" />
+                                            <label for="inputNamaUser">Enter Username</label>
                                         </div>
                                         <div class="form-floating mb-3">
                                             <input class="form-control" name="password" id="inputPassword" type="password" placeholder="Password" />
                                             <label for="inputPassword">Enter Password</label>
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <button class="btn btn-primary" name="login">Login</button>
+                                            <button class=" btn btn-primary " name="login">Login</button>
                                         </div>
+                                        <?php
+                                        // Check if $data is set and not empty before printing
+                                        if (isset($data) && !empty($data)) {
+                                            echo '<pre>';
+                                            print_r($data);
+                                            echo '</pre>';
+                                        }
+                                        ?>
                                     </form>
                                 </div>
                             </div>

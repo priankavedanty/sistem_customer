@@ -3,7 +3,11 @@
 require 'function.php';
 require 'cek.php';
 
+if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_SESSION['pelanggan']) {  
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +18,7 @@ require 'cek.php';
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Sistem E-CRM</title>
+    <title>Sistem Informasi Manajemen</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -53,7 +57,7 @@ require 'cek.php';
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-
+                        <?php if (@$_SESSION['admin']) { ?>
                         <div class="sb-sidenav-menu-heading">Menu</div>
                         <a class="nav-link" href="user.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -63,31 +67,38 @@ require 'cek.php';
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Pelanggan
                         </a>
+                        <a class="nav-link" href="mandor.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Data Mandor
+                        </a>
+                    <?php } if (@$_SESSION['admin']) { ?>
+                        <a class="nav-link" href="inventory.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Data Inventory
+                        </a>
                         <a class="nav-link" href="pesanan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Pesanan
-                        </a>
-                        <a class="nav-link" href="desain.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Data Desain Proyek
-                        </a>
-                        <a class="nav-link" href="review.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Data Review Pelayanan
                         </a>
                         <a class="nav-link" href="transaksi.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Transaksi
                         </a>
+                    <?php } if (@$_SESSION['mandor']) { ?>
+                        <a class="nav-link" href="proyek.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Data Proyek
+                        </a>
+                    <?php } if (@$_SESSION['mandor'] || @$_SESSION['direktur']) { ?> 
                         <a class="nav-link" href="laporan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Laporan
                         </a>
-
+                        <?php } ?>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Admin
+                        <div class="small">Logged in as: <br>
+                        Admin </div>
                     </div>
             </nav>
         </div>
@@ -99,10 +110,29 @@ require 'cek.php';
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">Selamat datang di halaman Dashboard</li>
                     </ol>
-
-
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-area me-1"></i>
+                                    Data Inventory Tahun 2023
+                                </div>
+                                <div class="card-body"><canvas id="myNewAreaChart" width="100%" height="40"></canvas></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-bar me-1"></i>
+                                    Data Transaksi Tahun 2023
+                                </div>
+                                <div class="card-body"><canvas id="myNewBarChart" width="100%" height="40"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
+
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
@@ -116,10 +146,14 @@ require 'cek.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="assets/demo/chart-newarea-demo.js"></script>
+    <script src="assets/demo/chart-newbar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
 </body>
 
 </html>
+
+<?php
+}
+?>

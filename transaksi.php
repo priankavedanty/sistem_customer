@@ -3,6 +3,8 @@
 require 'function.php';
 require 'cek.php';
 
+if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_SESSION['pelanggan']) {  
+
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +46,7 @@ require 'cek.php';
         </ul>
     </nav>
     <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
+                <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
@@ -53,7 +55,7 @@ require 'cek.php';
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-
+                        <?php if (@$_SESSION['admin']) { ?>
                         <div class="sb-sidenav-menu-heading">Menu</div>
                         <a class="nav-link" href="user.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -63,31 +65,38 @@ require 'cek.php';
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Pelanggan
                         </a>
+                        <a class="nav-link" href="mandor.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Data Mandor
+                        </a>
+                    <?php } if (@$_SESSION['admin']) { ?>
+                        <a class="nav-link" href="inventory.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Data Inventory
+                        </a>
                         <a class="nav-link" href="pesanan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Pesanan
-                        </a>
-                        <a class="nav-link" href="desain.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Data Desain Proyek
-                        </a>
-                        <a class="nav-link" href="review.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Data Review Pelayanan
                         </a>
                         <a class="nav-link" href="transaksi.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Transaksi
                         </a>
+                    <?php } if (@$_SESSION['mandor']) { ?>
+                        <a class="nav-link" href="proyek.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Data Proyek
+                        </a>
+                    <?php } if (@$_SESSION['mandor'] || @$_SESSION['direktur']) { ?> 
                         <a class="nav-link" href="laporan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Laporan
                         </a>
-
+                        <?php } ?>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Admin
+                        <div class="small">Logged in as: <br>
+                        Admin </div>
                     </div>
             </nav>
         </div>
@@ -99,31 +108,37 @@ require 'cek.php';
                     <!-- Button to Open the Modal -->
 
                     <div class="card mb-4">
-
+                        <div class="card-header">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambah">
+                                Tambah Data
+                            </button>
+                        </div>
                         <div class="card-body">
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Tgl pesan</th>
-                                        <th>Nama</th>
-                                        <th>Status pesanan</th>
+                                        <th>Tanggal</th>
+                                        <th>Pelanggan</th>
+                                        <th>Status bayar</th>
                                         <th>Batas bayar</th>
-                                        <th>Jumlah</th>
+                                        <th>Jumlah transaksi</th>
                                         <th>Total</th>
                                         <th>Keterangan</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Tgl pesan</th>
-                                        <th>Nama</th>
-                                        <th>Status pesanan</th>
+                                        <th>Tanggal</th>
+                                        <th>Pelanggan</th>
+                                        <th>Status bayar</th>
                                         <th>Batas bayar</th>
-                                        <th>Jumlah</th>
+                                        <th>Jumlah transaksi</th>
                                         <th>Total</th>
                                         <th>Keterangan</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -139,7 +154,7 @@ require 'cek.php';
                                         $jumlah_transaksi = $data['jumlah_transaksi'];
                                         $total_transaksi = $data['total_transaksi'];
                                         $keterangan = $data['keterangan'];
-                                        $id = $data['id_transaksi'];
+                                        $id_transaksi = $data['id_transaksi'];
                                     ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
@@ -150,7 +165,48 @@ require 'cek.php';
                                             <td><?= $jumlah_transaksi; ?></td>
                                             <td><?= $total_transaksi; ?></td>
                                             <td><?= $keterangan; ?></td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?= $id_transaksi; ?>">Delete</button>
+                                            </td>
                                         </tr>
+
+                                        <!-- Delete Modal -->
+                                        <div class="modal fade" id="delete<?= $id_transaksi; ?>">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Delete Data Transaksi</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <form method="POST">
+                                                        <div class="modal-body">
+
+                                                            <label>Nama pelanggan</label>
+                                                            <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" readonly>
+
+                                                            <label>Status bayar</label>
+                                                            <input type="text" name="status_bayar" value="<?= $status_bayar; ?>" class="form-control" readonly>
+
+                                                            <label>Keterangan</label>
+                                                            <input type="text" name="keterangan" value="<?= $keterangan; ?>" class="form-control" readonly>
+
+                                                            <!-- Hidden id_pelanggan value -->
+                                                            <input type="hidden" name="id_transaksi" value="<?= $id_transaksi; ?>">
+                                                        </div>
+
+                                                        <!-- Modal footer -->
+                                                        <div class="modal-footer">
+                                                            <label>Yakin ingin menghapus?</label>
+                                                            <button type="submit" class="btn btn-primary" name="hapustransaksi">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     <?php };  ?>
                                 </tbody>
                             </table>
@@ -171,8 +227,8 @@ require 'cek.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="assets/demo/chart-newarea-demo.js"></script>
+    <script src="assets/demo/chart-newbar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -183,7 +239,7 @@ require 'cek.php';
 
 
 <!-- The Modal -->
-<div class="modal fade" id="myModal">
+<div class="modal fade" id="tambah">
     <div class="modal-dialog">
         <div class="modal-content">
 
@@ -223,9 +279,14 @@ require 'cek.php';
                         <button type="submit" class="btn btn-primary" name="simpantransaksi">Submit</button>
 
                     </div>
+                </div>
             </form>
         </div>
     </div>
 </div>
 
 </html>
+
+<?php
+}
+?>

@@ -3,6 +3,8 @@
 require 'function.php';
 require 'cek.php';
 
+if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_SESSION['pelanggan']) {  
+
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +16,7 @@ require 'cek.php';
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Sistem E-CRM</title>
+    <title>Sistem Informasi Manajemen</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -44,7 +46,7 @@ require 'cek.php';
         </ul>
     </nav>
     <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
+                <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
@@ -53,7 +55,7 @@ require 'cek.php';
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-
+                        <?php if (@$_SESSION['admin']) { ?>
                         <div class="sb-sidenav-menu-heading">Menu</div>
                         <a class="nav-link" href="user.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -63,31 +65,38 @@ require 'cek.php';
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Pelanggan
                         </a>
+                        <a class="nav-link" href="mandor.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Data Mandor
+                        </a>
+                    <?php } if (@$_SESSION['admin']) { ?>
+                        <a class="nav-link" href="inventory.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Data Inventory
+                        </a>
                         <a class="nav-link" href="pesanan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Pesanan
-                        </a>
-                        <a class="nav-link" href="desain.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Data Desain Proyek
-                        </a>
-                        <a class="nav-link" href="review.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Data Review Pelayanan
                         </a>
                         <a class="nav-link" href="transaksi.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Transaksi
                         </a>
+                    <?php } if (@$_SESSION['mandor']) { ?>
+                        <a class="nav-link" href="proyek.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Data Proyek
+                        </a>
+                    <?php } if (@$_SESSION['mandor'] || @$_SESSION['direktur']) { ?> 
                         <a class="nav-link" href="laporan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Data Laporan
                         </a>
-
+                        <?php } ?>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Admin
+                        <div class="small">Logged in as: <br>
+                        Admin </div>
                     </div>
             </nav>
         </div>
@@ -113,6 +122,7 @@ require 'cek.php';
                                         <th>Nama User</th>
                                         <th>Email</th>
                                         <th>Jabatan</th>
+                                        <th>Jam kerja</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -122,6 +132,7 @@ require 'cek.php';
                                         <th>Nama User</th>
                                         <th>Email</th>
                                         <th>Jabatan</th>
+                                        <th>Jam kerja</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -134,6 +145,7 @@ require 'cek.php';
                                         $nama_user = $data['nama_user'];
                                         $email = $data['email'];
                                         $jabatan = $data['jabatan'];
+                                        $jam_kerja = $data['jam_kerja'];
                                         $id_user = $data['id_user'];
 
                                     ?>
@@ -143,6 +155,7 @@ require 'cek.php';
                                             <td><?= $nama_user; ?></td>
                                             <td><?= $email; ?></td>
                                             <td><?= $jabatan; ?></td>
+                                            <td><?= $jam_kerja; ?></td>
                                             <td>
                                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit<?= $id_user; ?>">Edit</button>
                                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?= $id_user; ?>">Delete</button>
@@ -178,7 +191,16 @@ require 'cek.php';
                                                                 <option value="direktur" <?php if ($jabatan == 'direktur') {
                                                                                                 echo "selected";
                                                                                             } ?>>direktur</option>
+                                                                <option value="mandor" <?php if ($jabatan == 'mandor') {
+                                                                                            echo "selected";
+                                                                                        } ?>>mandor</option>
+                                                                <option value="pelanggan" <?php if ($jabatan == 'pelanggan') {
+                                                                                                echo "selected";
+                                                                                            } ?>>pelanggan</option>
                                                             </select>
+
+                                                            <label>Jam kerja</label>
+                                                            <input type="date" name="jam_kerja" value="<?= $jam_kerja; ?>" class="form-control" required>
 
                                                             <!-- Hidden id_user value -->
                                                             <input type="hidden" name="id_user" value="<?= $id_user; ?>">
@@ -217,6 +239,9 @@ require 'cek.php';
                                                                 <option value="<?= $jabatan; ?>"><?= $jabatan; ?></option>
                                                             </select>
 
+                                                            <label>Jam kerja</label>
+                                                            <input type="date" name="jam_kerja" value="<?= $jam_kerja; ?>" class="form-control" required>
+
                                                             <!-- Hidden id_user value -->
                                                             <input type="hidden" name="id_user" value="<?= $id_user; ?>">
                                                         </div>
@@ -252,8 +277,8 @@ require 'cek.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="assets/demo/chart-area-demo.js"></script>
-    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="assets/demo/chart-newarea-demo.js"></script>
+    <script src="assets/demo/chart-newbar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -291,7 +316,12 @@ require 'cek.php';
                     <select class="form-control" name="jabatan">
                         <option value="admin">admin</option>
                         <option value="direktur">direktur</option>
+                        <option value="mandor">mandor</option>
+                        <option value="pelanggan">pelanggan</option>
                     </select>
+
+                    <label>Jam kerja</label>
+                    <input type="date" name="jam_kerja" value="<?= $jam_kerja; ?>" class="form-control" required>
                 </div>
 
                 <!-- Modal footer -->
@@ -304,5 +334,8 @@ require 'cek.php';
     </div>
 </div>
 
-
 </html>
+
+<?php
+}
+?>

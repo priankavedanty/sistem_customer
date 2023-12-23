@@ -104,7 +104,7 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h2 class="mt-4">Data Pelanggan</h2>
+                    <h2 class="mt-4">Data Mandor</h2>
                     <!-- Button to Open the Modal -->
 
                     <div class="card mb-4">
@@ -119,22 +119,20 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Nama pelanggan</th>
+                                        <th>Nama mandor</th>
                                         <th>Alamat</th>
                                         <th>No telp</th>
                                         <th>Email</th>
-                                        <th>Keterangan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Nama pelanggan</th>
+                                        <th>Nama mandor</th>
                                         <th>Alamat</th>
                                         <th>No telp</th>
                                         <th>Email</th>
-                                        <th>Keterangan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -142,37 +140,35 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
 
                                     <?php
                                     $no = 1;
-                                    $sql = mysqli_query($conn, "SELECT * FROM tb_pelanggan");
+                                    $sql = mysqli_query($conn, "SELECT * FROM tb_mandor");
                                     while ($data = mysqli_fetch_array($sql)) {
-                                        $nama_pelanggan = $data['nama_pelanggan'];
+                                        $nama_mandor = $data['nama_mandor'];
                                         $alamat = $data['alamat'];
                                         $no_telp = $data['no_telp'];
                                         $email = $data['email'];
-                                        $keterangan = $data['keterangan'];
-                                        $id_pelanggan = $data['id_pelanggan'];
+                                        $id_mandor = $data['id_mandor'];
                                     ?>
 
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><?= $nama_pelanggan; ?></td>
+                                            <td><?= $nama_mandor; ?></td>
                                             <td><?= $alamat; ?></td>
                                             <td><?= $no_telp; ?></td>
                                             <td><?= $email; ?></td>
-                                            <td><?= $keterangan; ?></td>
                                             <td>
-                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit<?= $id_pelanggan; ?>">Edit</button>
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?= $id_pelanggan; ?>">Delete</button>
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit<?= $id_mandor; ?>">Edit</button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?= $id_mandor; ?>">Delete</button>
                                             </td>
                                         </tr>
 
                                         <!-- Edit Modal -->
-                                        <div class="modal fade" id="edit<?= $id_pelanggan; ?>">
+                                        <div class="modal fade" id="edit<?= $id_mandor; ?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
 
                                                     <!-- Modal Header -->
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Edit Data Pelanggan</h4>
+                                                        <h4 class="modal-title">Edit Data Mandor</h4>
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                     </div>
 
@@ -180,8 +176,8 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                                                     <form method="POST">
                                                         <div class="modal-body">
 
-                                                            <label>Nama Pelanggan</label>
-                                                            <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
+                                                            <label>Nama Mandor</label>
+                                                            <input type="text" name="nama_mandor" value="<?= $nama_mandor; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
                                                             <label>Alamat</label>
                                                             <input type="text" name="alamat" value="<?= $alamat; ?>" class="form-control" required>
@@ -192,16 +188,13 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                                                             <label>Email</label>
                                                             <input type="text" name="email" value="<?= $email; ?>" class="form-control" required>
 
-                                                            <label>Keterangan</label>
-                                                            <input type="text" name="keterangan" value="<?= $keterangan; ?>" class="form-control" required>
-
                                                             <!-- Hidden id_pelanggan value -->
-                                                            <input type="hidden" name="id_pelanggan" value="<?= $id_pelanggan; ?>">
+                                                            <input type="hidden" name="id_mandor" value="<?= $id_mandor; ?>">
                                                         </div>
 
                                                         <!-- Modal footer -->
                                                         <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-primary" name="editpelanggan">Submit</button>
+                                                            <button type="submit" class="btn btn-primary" name="editmandor">Submit</button>
 
                                                         </div>
                                                     </form>
@@ -210,13 +203,13 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                                         </div>
 
                                         <!-- Delete Modal -->
-                                        <div class="modal fade" id="delete<?= $id_pelanggan; ?>">
+                                        <div class="modal fade" id="delete<?= $id_mandor; ?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
 
                                                     <!-- Modal Header -->
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Delete Data Pelanggan</h4>
+                                                        <h4 class="modal-title">Delete Data Mandor</h4>
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                     </div>
 
@@ -224,8 +217,8 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                                                     <form method="POST">
                                                         <div class="modal-body">
 
-                                                            <label>Nama Pelanggan</label>
-                                                            <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" readonly>
+                                                            <label>Nama Mandor</label>
+                                                            <input type="text" name="nama_mandor" value="<?= $nama_mandor; ?>" class="form-control" readonly>
 
                                                             <label>No telp</label>
                                                             <input type="text" name="no_telp" value="<?= $no_telp; ?>" class="form-control" readonly>
@@ -234,13 +227,13 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                                                             <input type="text" name="email" value="<?= $email; ?>" class="form-control" readonly>
 
                                                             <!-- Hidden id_pelanggan value -->
-                                                            <input type="hidden" name="id_pelanggan" value="<?= $id_pelanggan; ?>">
+                                                            <input type="hidden" name="id_mandor" value="<?= $id_mandor; ?>">
                                                         </div>
 
                                                         <!-- Modal footer -->
                                                         <div class="modal-footer">
                                                             <label>Yakin ingin menghapus?</label>
-                                                            <button type="submit" class="btn btn-primary" name="hapuspelanggan">Submit</button>
+                                                            <button type="submit" class="btn btn-primary" name="hapusmandor">Submit</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -287,7 +280,7 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Tambah Data Pelanggan</h4>
+                <h4 class="modal-title">Tambah Data Mandor</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -295,8 +288,8 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
             <form method="POST">
                 <div class="modal-body">
 
-                    <label>Nama Pelanggan</label>
-                    <input type="text" name="nama_pelanggan" placeholder="Masukkan nama pelanggan" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
+                    <label>Nama Mandor</label>
+                    <input type="text" name="nama_mandor" placeholder="Masukkan nama mandor" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
                     <label>Alamat</label>
                     <input type="text" name="alamat" placeholder="Masukkan alamat" class="form-control" required>
@@ -307,12 +300,9 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                     <label>Email</label>
                     <input type="text" name="email" placeholder="Masukkan email" class="form-control" required>
 
-                    <label>Keterangan</label>
-                    <input type="text" name="keterangan" placeholder="Masukkan keterangan" class="form-control" required>
-
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" name="simpanpelanggan">Submit</button>
+                        <button type="submit" class="btn btn-primary" name="simpanmandor">Submit</button>
 
                     </div>
             </form>

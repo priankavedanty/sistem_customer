@@ -46,7 +46,7 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
         </ul>
     </nav>
     <div id="layoutSidenav">
-                <div id="layoutSidenav_nav">
+        <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
@@ -104,7 +104,7 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h2 class="mt-4">Data Pelanggan</h2>
+                    <h2 class="mt-4">Data Proyek</h2>
                     <!-- Button to Open the Modal -->
 
                     <div class="card mb-4">
@@ -119,22 +119,28 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Nama pelanggan</th>
-                                        <th>Alamat</th>
-                                        <th>No telp</th>
-                                        <th>Email</th>
-                                        <th>Keterangan</th>
+                                        <th>Tanggal</th>
+                                        <th>Kegiatan</th>
+                                        <th>Pekerjaan</th>
+                                        <th>Lokasi</th>
+                                        <th>Volume</th>
+                                        <th>Total</th>
+                                        <th>Progress</th>
+                                        <th>Dokumen</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Nama pelanggan</th>
-                                        <th>Alamat</th>
-                                        <th>No telp</th>
-                                        <th>Email</th>
-                                        <th>Keterangan</th>
+                                        <th>Tanggal</th>
+                                        <th>Kegiatan</th>
+                                        <th>Pekerjaan</th>
+                                        <th>Lokasi</th>
+                                        <th>Volume</th>
+                                        <th>Total</th>
+                                        <th>Progress</th>
+                                        <th>Dokumen</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
@@ -142,37 +148,43 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
 
                                     <?php
                                     $no = 1;
-                                    $sql = mysqli_query($conn, "SELECT * FROM tb_pelanggan");
+                                    $sql = mysqli_query($conn, "SELECT * FROM tb_proyek");
                                     while ($data = mysqli_fetch_array($sql)) {
-                                        $nama_pelanggan = $data['nama_pelanggan'];
-                                        $alamat = $data['alamat'];
-                                        $no_telp = $data['no_telp'];
-                                        $email = $data['email'];
-                                        $keterangan = $data['keterangan'];
-                                        $id_pelanggan = $data['id_pelanggan'];
+                                        $tgl_pengerjaan = $data['tgl_pengerjaan'];
+                                        $kegiatan = $data['kegiatan'];
+                                        $pekerjaan = $data['pekerjaan'];
+                                        $lokasi = $data['lokasi'];
+                                        $volume = $data['volume'];
+                                        $total = $data['total'];
+                                        $progress_proyek = $data['progress_proyek'];
+                                        $dokumen = $data['dokumen'];
+                                        $id_proyek = $data['id_proyek'];
                                     ?>
 
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><?= $nama_pelanggan; ?></td>
-                                            <td><?= $alamat; ?></td>
-                                            <td><?= $no_telp; ?></td>
-                                            <td><?= $email; ?></td>
-                                            <td><?= $keterangan; ?></td>
+                                            <td><?= $tgl_pengerjaan; ?></td>
+                                            <td><?= $kegiatan; ?></td>
+                                            <td><?= $pekerjaan; ?></td>
+                                            <td><?= $lokasi; ?></td>
+                                            <td><?= $volume; ?></td>
+                                            <td><?= $total; ?></td>
+                                            <td><?= $progress_proyek; ?></td>
+                                            <td><?= $dokumen; ?></td>
                                             <td>
-                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit<?= $id_pelanggan; ?>">Edit</button>
-                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?= $id_pelanggan; ?>">Delete</button>
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit<?= $id_proyek; ?>">Edit</button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?= $id_proyek; ?>">Delete</button>
                                             </td>
                                         </tr>
 
                                         <!-- Edit Modal -->
-                                        <div class="modal fade" id="edit<?= $id_pelanggan; ?>">
+                                        <div class="modal fade" id="edit<?= $id_proyek; ?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
 
                                                     <!-- Modal Header -->
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Edit Data Pelanggan</h4>
+                                                        <h4 class="modal-title">Edit Data Proyek</h4>
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                     </div>
 
@@ -180,28 +192,38 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                                                     <form method="POST">
                                                         <div class="modal-body">
 
-                                                            <label>Nama Pelanggan</label>
-                                                            <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
+                                                            <label>Tgl pengerjaan</label>
+                                                            <input type="date" name="tgl_pengerjaan" value="<?= $tgl_pengerjaan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
-                                                            <label>Alamat</label>
-                                                            <input type="text" name="alamat" value="<?= $alamat; ?>" class="form-control" required>
+                                                            <label>Kegiatan</label>
+                                                            <input type="text" name="kegiatan" value="<?= $kegiatan; ?>" class="form-control" required>
 
-                                                            <label>No telp</label>
-                                                            <input type="text" name="no_telp" value="<?= $no_telp; ?>" class="form-control" required>
+                                                            <label>Pekerjaan</label>
+                                                            <input type="text" name="pekerjaan" value="<?= $pekerjaan; ?>" class="form-control" required>
 
-                                                            <label>Email</label>
-                                                            <input type="text" name="email" value="<?= $email; ?>" class="form-control" required>
+                                                            <label>Lokasi</label>
+                                                            <input type="text" name="lokasi" value="<?= $lokasi; ?>" class="form-control" required>
 
-                                                            <label>Keterangan</label>
-                                                            <input type="text" name="keterangan" value="<?= $keterangan; ?>" class="form-control" required>
+                                                            <label>Volume</label>
+                                                            <input type="text" name="volume" value="<?= $volume; ?>" class="form-control" required>
+
+                                                            <label>Total</label>
+                                                            <input type="text" name="total" value="<?= $total; ?>" class="form-control" required>
+
+                                                            <label>Progess</label>
+                                                            <input type="text" name="progress_proyek" value="<?= $progress_proyek; ?>" class="form-control" required>
+
+                                                            <label>Dokumen</label>
+                                                            <input type="file" name="dokumen" class="form-control">
+
 
                                                             <!-- Hidden id_pelanggan value -->
-                                                            <input type="hidden" name="id_pelanggan" value="<?= $id_pelanggan; ?>">
+                                                            <input type="hidden" name="id_proyek" value="<?= $id_proyek; ?>">
                                                         </div>
 
                                                         <!-- Modal footer -->
                                                         <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-primary" name="editpelanggan">Submit</button>
+                                                            <button type="submit" class="btn btn-primary" name="editproyek">Submit</button>
 
                                                         </div>
                                                     </form>
@@ -210,13 +232,13 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                                         </div>
 
                                         <!-- Delete Modal -->
-                                        <div class="modal fade" id="delete<?= $id_pelanggan; ?>">
+                                        <div class="modal fade" id="delete<?= $id_proyek; ?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
 
                                                     <!-- Modal Header -->
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Delete Data Pelanggan</h4>
+                                                        <h4 class="modal-title">Delete Data Proyek</h4>
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                     </div>
 
@@ -224,23 +246,38 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                                                     <form method="POST">
                                                         <div class="modal-body">
 
-                                                            <label>Nama Pelanggan</label>
-                                                            <input type="text" name="nama_pelanggan" value="<?= $nama_pelanggan; ?>" class="form-control" readonly>
+                                                            <label>Tgl pengerjaan</label>
+                                                            <input type="date" name="tgl_pengerjaan" value="<?= $tgl_pengerjaan; ?>" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
-                                                            <label>No telp</label>
-                                                            <input type="text" name="no_telp" value="<?= $no_telp; ?>" class="form-control" readonly>
+                                                            <label>Kegiatan</label>
+                                                            <input type="text" name="kegiatan" value="<?= $kegiatan; ?>" class="form-control" required>
 
-                                                            <label>Email</label>
-                                                            <input type="text" name="email" value="<?= $email; ?>" class="form-control" readonly>
+                                                            <label>Pekerjaan</label>
+                                                            <input type="text" name="pekerjaan" value="<?= $pekerjaan; ?>" class="form-control" required>
+
+                                                            <label>Lokasi</label>
+                                                            <input type="text" name="lokasi" value="<?= $lokasi; ?>" class="form-control" required>
+
+                                                            <label>Volume</label>
+                                                            <input type="text" name="volume" value="<?= $volume; ?>" class="form-control" required>
+
+                                                            <label>Total</label>
+                                                            <input type="text" name="total" value="<?= $total; ?>" class="form-control" required>
+
+                                                            <label>Progess</label>
+                                                            <input type="text" name="progress_proyek" value="<?= $progress_proyek; ?>" class="form-control" required>
+
+                                                            <label>Dokumen</label>
+                                                            <input type="file" name="dokumen" class="form-control">
 
                                                             <!-- Hidden id_pelanggan value -->
-                                                            <input type="hidden" name="id_pelanggan" value="<?= $id_pelanggan; ?>">
+                                                            <input type="hidden" name="id_proyek" value="<?= $id_proyek; ?>">
                                                         </div>
 
                                                         <!-- Modal footer -->
                                                         <div class="modal-footer">
                                                             <label>Yakin ingin menghapus?</label>
-                                                            <button type="submit" class="btn btn-primary" name="hapuspelanggan">Submit</button>
+                                                            <button type="submit" class="btn btn-primary" name="hapusproyek">Submit</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -287,7 +324,7 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Tambah Data Pelanggan</h4>
+                <h4 class="modal-title">Tambah Data Proyek</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -295,24 +332,34 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
             <form method="POST">
                 <div class="modal-body">
 
-                    <label>Nama Pelanggan</label>
-                    <input type="text" name="nama_pelanggan" placeholder="Masukkan nama pelanggan" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
+                    <label>Tgl pengerjaan</label>
+                    <input type="date" name="tgl_pengerjaan" placeholder="Masukkan tgl pengerjaan" class="form-control" required oninvalid="this.setCustomValidity('Data tidak boleh kosong')" autocomplete="off">
 
-                    <label>Alamat</label>
-                    <input type="text" name="alamat" placeholder="Masukkan alamat" class="form-control" required>
+                    <label>Kegiatan</label>
+                    <input type="text" name="kegiatan" placeholder="Masukkan jenis kegiatan" class="form-control" required>
 
-                    <label>No telp</label>
-                    <input type="text" name="no_telp" placeholder="Masukkan no telp" class="form-control" required>
+                    <label>Pekerjaan</label>
+                    <input type="text" name="pekerjaan" placeholder="Masukkan jenis pekerjaan" class="form-control" required>
 
-                    <label>Email</label>
-                    <input type="text" name="email" placeholder="Masukkan email" class="form-control" required>
+                    <label>Lokasi</label>
+                    <input type="text" name="lokasi" placeholder="Masukkan lokasi proyek" class="form-control" required>
 
-                    <label>Keterangan</label>
-                    <input type="text" name="keterangan" placeholder="Masukkan keterangan" class="form-control" required>
+                    <label>Volume</label>
+                    <input type="text" name="volume" placeholder="Masukkan volume" class="form-control" required>
+
+                    <label>Total</label>
+                    <input type="number" name="total" placeholder="Masukkan total" class="form-control" required>
+
+                    <label>Progress</label>
+                    <input type="text" name="progress_proyek" placeholder="Masukkan progress proyek" class="form-control" required>
+
+                    <label>Dokumen</label>
+                    <input type="file" name="dokumen" class="form-control" required>
+
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" name="simpanpelanggan">Submit</button>
+                        <button type="submit" class="btn btn-primary" name="simpanproyek">Submit</button>
 
                     </div>
             </form>
@@ -321,7 +368,3 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
 </div>
 
 </html>
-
-<?php
-}
-?>

@@ -3,7 +3,7 @@
 session_start();
 
 //membuat koneksi ke database
-$conn = mysqli_connect("localhost", "root", "", "db_rejeki");
+$conn = mysqli_connect("localhost", "root", "", "db_manajemen");
 
 //tambah data user
 if (isset($_POST['simpanuser'])) {
@@ -11,9 +11,10 @@ if (isset($_POST['simpanuser'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $jabatan = $_POST['jabatan'];
+    $jam_kerja = $_POST['jam_kerja'];
 
-    $simpanuser = mysqli_query($conn, "INSERT INTO tb_user (id_user, nama_user, email, password, jabatan)
-                VALUES ('$id_user', '$nama_user', '$email', '$password', '$jabatan')");
+    $simpanuser = mysqli_query($conn, "INSERT INTO tb_user (id_user, nama_user, email, password, jabatan, jam_kerja)
+                VALUES ('$id_user', '$nama_user', '$email', '$password', '$jabatan', '$jam_kerja')");
 
     if ($simpanuser) {
         header('location:user.php');
@@ -30,8 +31,9 @@ if (isset($_POST['edituser'])) {
     $nama_user = $_POST['nama_user'];
     $email = $_POST['email'];
     $jabatan = $_POST['jabatan'];
+    $jam_kerja = $_POST['jam_kerja'];
 
-    $edituser = mysqli_query($conn, "UPDATE tb_user SET nama_user='$nama_user', email='$email', jabatan='$jabatan' WHERE id_user='$id_user'");
+    $edituser = mysqli_query($conn, "UPDATE tb_user SET nama_user='$nama_user', email='$email', jabatan='$jabatan', jam_kerja='$jam_kerja' WHERE id_user='$id_user'");
     // print_r($edituser);
     // die;
 
@@ -64,11 +66,10 @@ if (isset($_POST['simpanpelanggan'])) {
     $alamat = $_POST['alamat'];
     $no_telp = $_POST['no_telp'];
     $email = $_POST['email'];
-    $point_award = $_POST['point_award'];
     $keterangan = $_POST['keterangan'];
 
-    $simpanpelanggan = mysqli_query($conn, "INSERT INTO tb_pelanggan (id_pelanggan, nama_pelanggan, alamat, no_telp, email, point_award, keterangan)
-                VALUES ('$id_pelanggan', '$nama_pelanggan', '$alamat', '$no_telp', '$email', '$point_award', '$keterangan')");
+    $simpanpelanggan = mysqli_query($conn, "INSERT INTO tb_pelanggan (id_pelanggan, nama_pelanggan, alamat, no_telp, email, keterangan)
+                VALUES ('$id_pelanggan', '$nama_pelanggan', '$alamat', '$no_telp', '$email', '$keterangan')");
 
     if ($simpanpelanggan) {
         header('location:pelanggan.php');
@@ -85,10 +86,9 @@ if (isset($_POST['editpelanggan'])) {
     $alamat = $_POST['alamat'];
     $no_telp = $_POST['no_telp'];
     $email = $_POST['email'];
-    $point_award = $_POST['point_award'];
     $keterangan = $_POST['keterangan'];
 
-    $editpelanggan = mysqli_query($conn, "UPDATE tb_pelanggan SET nama_pelanggan='$nama_pelanggan', alamat='$alamat', no_telp='$no_telp', email='$email', point_award='$point_award', keterangan='$keterangan' WHERE id_pelanggan='$id_pelanggan'");
+    $editpelanggan = mysqli_query($conn, "UPDATE tb_pelanggan SET nama_pelanggan='$nama_pelanggan', alamat='$alamat', no_telp='$no_telp', email='$email', keterangan='$keterangan' WHERE id_pelanggan='$id_pelanggan'");
     // print_r($editpelanggan);
     // die;
 
@@ -115,9 +115,182 @@ if (isset($_POST['hapuspelanggan'])) {
     }
 }
 
+//tambah data mandor
+if (isset($_POST['simpanmandor'])) {
+    $nama_mandor = $_POST['nama_mandor'];
+    $alamat = $_POST['alamat'];
+    $no_telp = $_POST['no_telp'];
+    $email = $_POST['email'];
+    $dokumen = $_POST['dokumen'];
+
+    $simpanmandor = mysqli_query($conn, "INSERT INTO tb_mandor (id_mandor, nama_mandor, alamat, no_telp, email, dokumen)
+                VALUES ('$id_mandor', '$nama_mandor', '$alamat', '$no_telp', '$email', '$dokumen')");
+
+    if ($simpanmandor) {
+        header('location:mandor.php');
+    } else {
+        echo "Gagal simpan data mandor";
+        header('location:mandor.php');
+    }
+}
+
+//update data mandor
+if (isset($_POST['editmandor'])) {
+    $id_mandor = $_POST['id_mandor'];
+    $nama_mandor = $_POST['nama_mandor'];
+    $alamat = $_POST['alamat'];
+    $no_telp = $_POST['no_telp'];
+    $email = $_POST['email'];
+    $dokumen = $_POST['dokumen'];
+
+    $editmandor = mysqli_query($conn, "UPDATE tb_mandor SET nama_mandor='$nama_mandor', alamat='$alamat', no_telp='$no_telp', email='$email', dokumen='$dokumen' WHERE id_mandor='$id_mandor'");
+    // print_r($editmandor);
+    // die;
+
+    if ($editmandor) {
+        header('location:mandor.php');
+    } else {
+        echo "Gagal update data mandor";
+        header('location:mandor.php');
+    }
+}
+
+//delete data mandor
+if (isset($_POST['hapusmandor'])) {
+    $id_mandor = $_POST['id_mandor'];
+    $hapusmandor = mysqli_query($conn, "DELETE FROM tb_mandor WHERE id_mandor='$id_mandor'");
+    // print_r($hapusmandor);
+    // die;
+
+    if ($hapusmandor) {
+        header('location:mandor.php');
+    } else {
+        echo "Gagal delete data mandor";
+        header('location:mandor.php');
+    }
+}
+
+//tambah data proyek
+if (isset($_POST['simpanproyek'])) {
+    $tgl_pengerjaan = $_POST['tgl_pengerjaan'];
+    $kegiatan = $_POST['kegiatan'];
+    $pekerjaan = $_POST['pekerjaan'];
+    $lokasi = $_POST['lokasi'];
+    $volume = $_POST['volume'];
+    $total = $_POST['total'];
+    $progress_proyek = $_POST['progress_proyek'];
+    $dokumen = $_POST['dokumen'];
+
+    $simpanproyek = mysqli_query($conn, "INSERT INTO tb_proyek (id_proyek, tgl_pengerjaan, kegiatan, pekerjaan, lokasi, volume, total, progress_proyek, dokumen)
+                VALUES ('$id_proyek', '$tgl_pengerjaan', '$kegiatan', '$pekerjaan', '$lokasi', '$volume', '$total', '$progress_proyek', '$dokumen')");
+
+    if ($simpanproyek) {
+        header('location:proyek.php');
+    } else {
+        echo "Gagal simpan data proyek";
+        header('location:proyek.php');
+    }
+}
+
+//update data proyek
+if (isset($_POST['editproyek'])) {
+    $id_proyek = $_POST['id_proyek'];
+    $tgl_pengerjaan = $_POST['tgl_pengerjaan'];
+    $kegiatan = $_POST['kegiatan'];
+    $pekerjaan = $_POST['pekerjaan'];
+    $lokasi = $_POST['lokasi'];
+    $volume = $_POST['volume'];
+    $total = $_POST['total'];
+    $progress_proyek = $_POST['progress_proyek'];
+    $dokumen = $_POST['dokumen'];
+
+    $editproyek = mysqli_query($conn, "UPDATE tb_proyek SET tgl_pengerjaan='$tgl_pengerjaan', kegiatan='$kegiatan', pekerjaan='$pekerjaan', lokasi='$lokasi', volume='$volume', total='$total', progress_proyek='$progress_proyek', dokumen='$dokumen' WHERE id_proyek='$id_proyek'");
+    // print_r($editproyek);
+    // die;
+
+    if ($editproyek) {
+        header('location:proyek.php');
+    } else {
+        echo "Gagal update data proyek";
+        header('location:proyek.php');
+    }
+}
+
+//delete data proyek
+if (isset($_POST['hapusproyek'])) {
+    $id_proyek = $_POST['id_proyek'];
+    $hapusproyek = mysqli_query($conn, "DELETE FROM tb_proyek WHERE id_proyek='$id_proyek'");
+    // print_r($hapusproyek);
+    // die;
+
+    if ($hapusproyek) {
+        header('location:proyek.php');
+    } else {
+        echo "Gagal delete data proyek";
+        header('location:proyek.php');
+    }
+}
+
+//tambah data inventory
+if (isset($_POST['simpaninventory'])) {
+    $jenis_bahan = $_POST['jenis_bahan'];
+    $satuan = $_POST['satuan'];
+    $harga = $_POST['harga'];
+    $terpakai = $_POST['terpakai'];
+    $jumlah_stok = $_POST['jumlah_stok'];
+    $keterangan = $_POST['keterangan'];
+
+    $simpaninventory = mysqli_query($conn, "INSERT INTO tb_inventory (id_inventory, jenis_bahan, satuan, harga, terpakai, jumlah_stok, keterangan)
+                VALUES ('$id_inventory', '$jenis_bahan', '$satuan', '$harga', '$terpakai', '$jumlah_stok', '$keterangan')");
+
+    if ($simpaninventory) {
+        header('location:inventory.php');
+    } else {
+        echo "Gagal simpan data inventory";
+        header('location:inventory.php');
+    }
+}
+
+//update data inventory
+if (isset($_POST['editinventory'])) {
+    $id_inventory = $_POST['id_inventory'];
+    $jenis_bahan = $_POST['jenis_bahan'];
+    $satuan = $_POST['satuan'];
+    $harga = $_POST['harga'];
+    $terpakai = $_POST['terpakai'];
+    $jumlah_stok = $_POST['jumlah_stok'];
+    $keterangan = $_POST['keterangan'];
+
+    $editinventory = mysqli_query($conn, "UPDATE tb_inventory SET jenis_bahan='$jenis_bahan', satuan='$satuan', harga='$harga', terpakai='$terpakai', jumlah_stok='$jumlah_stok', keterangan='$keterangan' WHERE id_inventory='$id_inventory'");
+    // print_r($editinventory);
+    // die;
+
+    if ($editinventory) {
+        header('location:inventory.php');
+    } else {
+        echo "Gagal update data inventory";
+        header('location:inventory.php');
+    }
+}
+
+//delete data inventory
+if (isset($_POST['hapusinventory'])) {
+    $id_inventory = $_POST['id_inventory'];
+    $hapusinventory = mysqli_query($conn, "DELETE FROM tb_inventory WHERE id_inventory='$id_inventory'");
+    // print_r($hapusinventory);
+    // die;
+
+    if ($hapusinventory) {
+        header('location:inventory.php');
+    } else {
+        echo "Gagal delete data inventory";
+        header('location:inventory.php');
+    }
+}
+
 //tambah data transaksi
 if (isset($_POST['simpantransaksi'])) {
-    $tgl_pesan = $_POST['tgl_pesan'];
+    $tgl_transaksi = $_POST['tgl_transaksi'];
     $nama_pelanggan = $_POST['nama_pelanggan'];
     $status_bayar = $_POST['status_bayar'];
     $batas_bayar = $_POST['batas_bayar'];
@@ -125,13 +298,26 @@ if (isset($_POST['simpantransaksi'])) {
     $total_transaksi = $_POST['total_transaksi'];
     $keterangan = $_POST['keterangan'];
 
-    $simpantransaksi = mysqli_query($conn, "INSERT INTO tb_transaksi (id_transaksi, tgl_transaksi, nama, status_bayar, batas_bayar, jumlah_transaksi, total_transaksi, keterangan)
+    $simpantransaksi = mysqli_query($conn, "INSERT INTO tb_transaksi (id_transaksi, tgl_transaksi, nama_pelanggan, status_bayar, batas_bayar, jumlah_transaksi, total_transaksi, keterangan)
                 VALUES ('$id_transaksi', '$tgl_transaksi', '$nama_pelanggan', '$status_bayar', '$batas_bayar', '$jumlah_transaksi', '$total_transaksi', '$keterangan')");
 
-    if ($simpanpelanggan) {
+    if ($simpantransaksi) {
         header('location:transaksi.php');
     } else {
         echo "Gagal simpan data transaksi";
+        header('location:transaksi.php');
+    }
+}
+
+//delete data transaksi
+if (isset($_POST['hapustransaksi'])) {
+    $id_transaksi = $_POST['id_transaksi'];
+    $hapustransaksi = mysqli_query($conn, "DELETE FROM tb_transaksi WHERE id_transaksi='$id_transaksi'");
+
+    if ($hapustransaksi) {
+        header('location:transaksi.php');
+    } else {
+        echo "Gagal delete data transaksi";
         header('location:transaksi.php');
     }
 }
@@ -141,21 +327,16 @@ if (isset($_POST['simpanpesanan'])) {
     $tanggal = $_POST['tanggal'];
     $nama_pelanggan = $_POST['nama_pelanggan'];
     $no_telp = $_POST['no_telp'];
-    $email = $_POST['email'];
+    $lokasi = $_POST['lokasi'];
+    $luas_bangunan = $_POST['luas_bangunan'];
     $layanan = $_POST['layanan'];
     $jenis_properti = $_POST['jenis_properti'];
-    $luas_bangunan = $_POST['luas_bangunan'];
-    $lokasi_proyek = $_POST['lokasi_proyek'];
-    $waktu_mulai_pengerjaan = $_POST['waktu_mulai_pengerjaan'];
-    $waktu_selesai_pengerjaan = $_POST['waktu_selesai_pengerjaan'];
-    $keterangan = 'belum bayar';
     // print_r($_POST);
     // die;
 
     // buat tanggal pesanan
-    $tanggal = date('Y-m-d');
-    $simpanpesanan = mysqli_query($conn, "INSERT INTO tb_pesanan (id_pesanan, nama_pelanggan, no_telp, email, layanan, jenis_properti, luas_bangunan, lokasi_proyek, waktu_mulai_pengerjaan, waktu_selesai_pengerjaan, keterangan, tanggal)
-                VALUES ('$id_pesanan', '$nama_pelanggan', '$no_telp', '$email', '$layanan', '$jenis_properti', '$luas_bangunan', '$lokasi_proyek', '$waktu_mulai_pengerjaan', '$waktu_selesai_pengerjaan', '$keterangan', '$tanggal')");
+    $simpanpesanan = mysqli_query($conn, "INSERT INTO tb_pesanan (id_pesanan, tanggal, nama_pelanggan, no_telp, lokasi, luas_bangunan, layanan, jenis_properti)
+                VALUES ('$id_pesanan', '$tanggal', '$nama_pelanggan', '$no_telp', '$lokasi', '$luas_bangunan', '$layanan', '$jenis_properti')");
 
     if ($simpanpesanan) {
         header('location:pesanan.php');
@@ -171,16 +352,12 @@ if (isset($_POST['editpesanan'])) {
     $tanggal = $_POST['tanggal'];
     $nama_pelanggan = $_POST['nama_pelanggan'];
     $no_telp = $_POST['no_telp'];
-    $email = $_POST['email'];
+    $lokasi = $_POST['lokasi'];
+    $luas_bangunan = $_POST['luas_bangunan'];
     $layanan = $_POST['layanan'];
     $jenis_properti = $_POST['jenis_properti'];
-    $luas_bangunan = $_POST['luas_bangunan'];
-    $lokasi_proyek = $_POST['lokasi_proyek'];
-    $waktu_mulai_pengerjaan = $_POST['waktu_mulai_pengerjaan'];
-    $waktu_selesai_pengerjaan = $_POST['waktu_selesai_pengerjaan'];
-    $keterangan = $_POST['keterangan'];
 
-    $editpesanan = mysqli_query($conn, "UPDATE tb_pesanan SET nama_pelanggan='$nama_pelanggan', no_telp='$no_telp', email='$email', layanan='$layanan', jenis_properti='$jenis_properti', luas_bangunan='$luas_bangunan', lokasi_proyek='$lokasi_proyek', waktu_mulai_pengerjaan='$waktu_mulai_pengerjaan', waktu_selesai_pengerjaan='$waktu_selesai_pengerjaan', keterangan='$keterangan' WHERE id_pesanan='$id_pesanan'");
+    $editpesanan = mysqli_query($conn, "UPDATE tb_pesanan SET tanggal='$tanggal', nama_pelanggan='$nama_pelanggan', no_telp='$no_telp', lokasi='$lokasi', luas_bangunan='$luas_bangunan', layanan='$layanan', jenis_properti='$jenis_properti' WHERE id_pesanan='$id_pesanan'");
     // print_r($editpesanan);
     // die;
 
@@ -264,8 +441,8 @@ if (isset($_POST['hapusdesain'])) {
 
     $query = mysqli_query($conn, "SELECT * FROM tb_desain WHERE id_desain='$id_desain'");
     $data = mysqli_fetch_array($query);
-    $namaFile = $data['gambar']; 
-    unlink("img/" . $namaFile); 
+    $namaFile = $data['gambar'];
+    unlink("img/" . $namaFile);
 
     $hapusdesain = mysqli_query($conn, "DELETE FROM tb_desain WHERE id_desain='$id_desain'");
 
