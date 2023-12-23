@@ -99,11 +99,6 @@ require 'cek.php';
                     <!-- Button to Open the Modal -->
 
                     <div class="card mb-4">
-                        <div class="card-header">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                Tambah Data
-                            </button>
-                        </div>
 
                         <div class="card-body">
                             <table id="datatablesSimple">
@@ -157,7 +152,6 @@ require 'cek.php';
                                             <td><?= $keterangan; ?></td>
                                         </tr>
                                     <?php };  ?>
-
                                 </tbody>
                             </table>
                         </div>
