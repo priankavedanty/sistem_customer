@@ -1,27 +1,28 @@
 <?php
 
-//cocokkan dengan database
-$cekdatabase = mysqli_query($conn, "SELECT * FROM tb_user WHERE nama_user='$nama_user' and password='$password' ");
+// ini hanya akan digunakan bila sudah login
+if (@$_SESSION['admin'] || @$_SESSION['mandor'] || @$_SESSION['direktur']) {
 
-//hitung jumlah data
+    // ambil data dari session
+    $id_user = @$_SESSION['admin'] . @$_SESSION['mandor'] . @$_SESSION['direktur'];
+    
+    //cocokkan dengan database
+    $cekdatabase = mysqli_query($conn, "SELECT * FROM tb_user WHERE id_user='$id_user'");
 
-$hitung = $cekdatabase->num_rows;
-$data = mysqli_fetch_assoc($cekdatabase);
+    //hitung jumlah data
+    $hitung = $cekdatabase->num_rows;
+    $data = mysqli_fetch_assoc($cekdatabase);
 
+    // buatkan variabel untuk menampung data
+    $nama_user = $data['nama_user'];
+    $email = $data['email'];
+    $jam_kerja = $data['jam_kerja'];
+    $jabatan = $data['jabatan'];
 
-//jika belum login
-if ($data['jabatan'] == "admin") {
-    $_SESSION['admin'] = $data['id_user'];
-    header("location:index.php");
-} elseif ($data['jabatan'] == "direktur") {
-    $_SESSION['direktur'] = $data['id_user'];
-    header("location:index.php");
-} elseif ($data['jabatan'] == "mandor") {
-    $_SESSION['mandor'] = $data['id_user'];
-    header("location:index.php");
-} elseif ($data['jabatan'] == "pelanggan") {
-    $_SESSION['pelanggan'] = $data['id_user'];
-    header('location:index.php');
 } else {
-    header('location:login.php');
+    // jika belum login, maka akan diarahkan ke halaman login
+    header('location: login.php');
 }
+
+
+?>

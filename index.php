@@ -7,8 +7,6 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
 
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,7 +55,7 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-                        <?php if (@$_SESSION['admin']) { ?>
+                    <?php if (@$_SESSION['admin']) { ?>
                         <div class="sb-sidenav-menu-heading">Menu</div>
                         <a class="nav-link" href="user.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -98,7 +96,8 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as: <br>
-                        Admin </div>
+                            <?php echo $email ?>
+                            </div>
                     </div>
             </nav>
         </div>
@@ -155,5 +154,8 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
 </html>
 
 <?php
+} else {
+    // jika belum login, maka akan diarahkan ke halaman login
+    header('location: login.php');
 }
 ?>

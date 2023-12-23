@@ -2,41 +2,34 @@
 
 require 'function.php';
 
-//cek login, terdaftar atau tidak
-
+// Cek nama_user dan password, jika benar alihkan ke index.php
 if (isset($_POST['login'])) {
     $nama_user = $_POST['nama_user'];
     $password = $_POST['password'];
 
-    //cocokkan dengan database
-    $cekdatabase = mysqli_query($conn, "SELECT * FROM tb_user WHERE nama_user='$nama_user' and password='$password' ");
+    $cek_database = mysqli_query($conn, "SELECT * FROM tb_user WHERE nama_user='$nama_user' AND password='$password'");
+    $cek = mysqli_num_rows($cek_database);
 
-    //hitung jumlah data
+    if ($cek > 0) {
+        $data = mysqli_fetch_assoc($cek_database);
 
-    $hitung = $cekdatabase->num_rows;
-    $data = mysqli_fetch_assoc($cekdatabase);
-    header("location:index.php");
-
-    // if ($hitung > 0) {
-    //     if ($data['jabatan'] == "admin") {
-    //         $_SESSION['admin'] = $data['id_user'];
-    //          header("location:index.php");
-    //     } elseif ($data['jabatan'] == "direktur") {
-    //         $_SESSION['direktur'] = $data['id_user'];
-    //         header("location:index.php");
-    //     } elseif ($data['jabatan'] == "mandor") {
-    //         $_SESSION['mandor'] = $data['id_user'];
-    //         header("location:index.php");
-    //     } elseif ($data['jabatan'] == "pelanggan") {
-    //         $_SESSION['pelanggan'] = $data['id_user'];
-    //         header('location:index.php');
-    //     }
-    // } else {
-    //     header('location:login.php');
-    // }
+        if ($data['jabatan'] == "admin") {
+            $_SESSION['admin'] = $data['id_user'];
+            header('location: index.php');
+        } else if ($data['jabatan'] == "mandor") {
+            $_SESSION['mandor'] = $data['id_user'];
+            header('location: index.php');
+        } else if ($data['jabatan'] == "direktur") {
+            $_SESSION['direktur'] = $data['id_user'];
+            header('location: index.php');
+        } else if ($data['jabatan'] == "pelanggan") {
+            $_SESSION['pelanggan'] = $data['id_user'];
+            header('location: index.php');
+        }
+    } else {
+        echo "<script>alert('Username atau Password Salah!');</script>";
+    }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -65,7 +58,7 @@ if (isset($_POST['login'])) {
                                     <h3 class="text-center font-weight-light my-4">Silahkan Login</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form method="post">
+                                    <form method="post" action="login.php">
                                         <div class="form-floating mb-3">
                                             <input class="form-control" name="nama_user" id="inputNamaUser" type="nama_user" placeholder="Username" />
                                             <label for="inputNamaUser">Enter Username</label>
@@ -75,16 +68,8 @@ if (isset($_POST['login'])) {
                                             <label for="inputPassword">Enter Password</label>
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <button class=" btn btn-primary " name="login">Login</button>
+                                            <button class="btn btn-primary" name="login" type="submit">Login</button>
                                         </div>
-                                        <?php
-                                        // Check if $data is set and not empty before printing
-                                        if (isset($data) && !empty($data)) {
-                                            echo '<pre>';
-                                            print_r($data);
-                                            echo '</pre>';
-                                        }
-                                        ?>
                                     </form>
                                 </div>
                             </div>
