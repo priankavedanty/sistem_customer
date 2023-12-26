@@ -12,32 +12,33 @@ if (isset($_POST['login'])) {
     $cekdatabase = mysqli_query($conn, "SELECT * FROM tb_user WHERE nama_user='$nama_user' and password='$password' ");
 
     //hitung jumlah data
+    $hitung = mysqli_num_rows($cekdatabase);
+    $user = mysqli_fetch_assoc($cekdatabase);
 
-    $hitung = $cekdatabase->num_rows;
-    $data = mysqli_fetch_assoc($cekdatabase);
-    header("location:index.php");
-
-    // if ($hitung > 0) {
-    //     if ($data['jabatan'] == "admin") {
-    //         $_SESSION['admin'] = $data['id_user'];
-    //          header("location:index.php");
-    //     } elseif ($data['jabatan'] == "direktur") {
-    //         $_SESSION['direktur'] = $data['id_user'];
-    //         header("location:index.php");
-    //     } elseif ($data['jabatan'] == "mandor") {
-    //         $_SESSION['mandor'] = $data['id_user'];
-    //         header("location:index.php");
-    //     } elseif ($data['jabatan'] == "pelanggan") {
-    //         $_SESSION['pelanggan'] = $data['id_user'];
-    //         header('location:index.php');
-    //     }
-    // } else {
-    //     header('location:login.php');
-    // }
+    if ($hitung > 0) {
+        if ($user['jabatan'] == "admin") {
+            $_SESSION['jabatan'] = 'True';                
+            header("location:index.php");
+        } elseif ($user['jabatan'] == "mandor") {
+            $_SESSION['jabatan'] = 'True'; 
+            header("location:index.php"); 
+        } elseif ($user['jabatan'] == "pelanggan") {
+            $_SESSION['jabatan'] = 'True'; 
+            header("location:index.php");
+        } elseif ($user['jabatan'] == "direktur") {
+            $_SESSION['jabatan'] = 'True'; 
+            header("location:index.php");      
+        } 
+        else {
+            header('location:login.php');
+    }
+}
 }
 
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
