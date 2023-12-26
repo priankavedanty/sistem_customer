@@ -96,7 +96,7 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as: <br>
-                        Admin </div>
+                        <?php echo $email ?> </div>
                     </div>
             </nav>
         </div>
@@ -192,3 +192,7 @@ if (@$_SESSION['admin'] || @$_SESSION['direktur'] || @$_SESSION['mandor'] || @$_
 </body>
 
 </html>
+
+<?php } else {
+    header("location: login.php");
+} ?>
